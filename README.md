@@ -38,6 +38,5 @@
     `python pixadd.py`
 
 # documentacion
-open pix
-python venv
-python_dot
+* [open pix](https://developers.openpix.com.br/)
+* [python ven](https://docs.python.org/3/library/venv.html)
