@@ -15,10 +15,12 @@
    
    `python -m venv mobility`
    * activa el entorno virtual
-       linux (bash/zsh)
-         source mobility/bin/activate
-       windonsw (cmd)
-          mobility/Script/activate.bat
+      * linux (bash/zsh)
+         ```source mobility/bin/activate```
+      * windonsw (cmd)
+          `mobility/Script/activate.bat`
+   * instala las dependecias
+     * ``pip install -r requirements.txt``
  
 7. app id
    
