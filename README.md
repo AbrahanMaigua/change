@@ -9,7 +9,7 @@
 # inicio
 
 1. copia el repositorio
-   `git clone https://github.com/AbrahanMaigua/change,git`
+   `git clone https://github.com/AbrahanMaigua/change.git`
   
 3. crea un entorno virtual y instala las dependecias
    
