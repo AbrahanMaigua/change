@@ -1,5 +1,7 @@
 # MObility
 
+
+
 # dependecia
 * python
 * pip
@@ -24,7 +26,7 @@
  
 7. app id
    
-   accede a Open pix vea al menu a  api/pulugin crea una nueva api/plugin
+   accede a [Open pix]() vea al menu a  api/pulugin crea una nueva api/plugin
    coloca el nombre a la api seleciona api rest y seleciona la cunta que vas a utilizar
    luego copias la App ID
 

@@ -1,4 +1,6 @@
 import time
+from lib.pixadd import *
+from dotenv import dotenv_values
 
 def cronometro(inicio):
    
@@ -13,18 +15,32 @@ def cronometro(inicio):
 
 inicio = time.time()
 stop = '00:00:10'
-pago = 'ACTIVE'
-aux = 0
+
+# Get the current date and time in ISO 8601 format
+#YYYY-MM-DDTHH:MM:SS.ssssssZ
+current_time_iso8601 = datetime.datetime.now().isoformat()
+config = dotenv_values(".env") 
+appid  = config['APP_ID']
+reset  = False
+cob = create_cob(appid, 50, 'test #2 de pago real')
+status = 'ACTIVE'
+
 while True:
-    start = next(cronometro(inicio))
-    print("Tiempo transcurrido:",start, pago, end="\r")
+    start  = next(cronometro(inicio))
+    print("Tiempo transcurrido: ",start, status, end="\r")
 
-    if start == stop:
-       if pago == 'ACTIVE':
-            pago = 'COMPLETED'
+    if status == 'ACTIVE':
+        cobr   = get_cob(appid, cob[1] )
+        status = cobr.get('charge')['status']
+        reset  = True
 
-    if  pago == 'COMPLETED' and aux == 0 :
-       inicio = time.time()
-       aux = 1
-          
+    if  status == 'COMPLETED':
+        if reset != False:
+            inicio = time.time()
+            reset  = False
+
+        
+        if start == stop:
+         break
+            
 
