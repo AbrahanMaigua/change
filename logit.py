@@ -1,6 +1,7 @@
 import time
 from lib.pixadd import *
 from dotenv import dotenv_values
+import os
 
 def cronometro(inicio):
    
@@ -31,6 +32,9 @@ while True:
 
     if status == 'ACTIVE':
         cobr   = get_cob(appid, cob[1] )
+        print(cobr['charge']['qrCodeImage'])
+        os.system('clear')
+        time.sleep(10)
         status = cobr.get('charge')['status']
         reset  = True
 

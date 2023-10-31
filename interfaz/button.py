@@ -1,0 +1,117 @@
+from typing import Any, Optional, Union
+import flet as ft
+from flet import (
+    Column,
+    Container,
+    ElevatedButton,
+    Page,
+    Row,
+    Text,
+    UserControl,
+    border_radius,
+    colors,
+    
+)
+class CalculatorApp(UserControl):
+
+    def btn(self,text,
+            bg=colors.BLUE_GREY_100,
+            color=colors.BLACK, expand=1,):
+        
+        return  ElevatedButton(text=text, 
+                               bgcolor=bg,
+                               color=color,
+                               expand=expand,
+                               on_click=self.button_clicked,
+                               data=text )
+    
+    def btnIcon(self, name, color, bg):
+        return ft.ElevatedButton(
+                    bgcolor=bg,
+                    content=ft.Row(
+                        [
+                            ft.Icon(name=name, color=color),
+                        ],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    ),
+                )
+    def build(self):
+        self.reset()
+        self.result = Text(value="0", color=colors.BLACK, size=20)
+
+        # application's root control (i.e. "view") containing all other controls
+        return Container(
+            padding=20,
+            
+            alignment=ft.alignment.center,
+
+            content=Column(
+                controls=[
+                    Row(controls=[self.result], alignment="end"),
+                    
+                    Row(
+                     alignment=ft.MainAxisAlignment.CENTER,
+
+                        controls=[
+                            self.btn(text="7"),
+                            self.btn(text="8"),
+                            self.btn(text="9"),
+                        ]
+                    ),
+                    Row(
+                        controls=[
+                            self.btn(text="4"),
+                            self.btn(text="5"),
+                            self.btn(text="6"),
+                        ]
+                    ),
+                    Row(
+                        controls=[
+                            self.btn(text="1"),
+                            self.btn(text="2"),
+                            self.btn(text="3"),
+                        ]
+                    ),
+                    Row(
+                        controls=[
+                            
+                            self.btnIcon(ft.icons.DELETE_OUTLINE, 'white', colors.RED),
+
+                            self.btn(text="0"),
+                            self.btnIcon(ft.icons.CHECK, 'white', colors.GREEN),
+
+                        ]
+                    ),
+                ]
+            ),
+        )
+
+    def button_clicked(self, e):
+        data = e.control.data
+        print(self.result.value)
+        try:
+               
+            if int(data) in tuple(range(0,10)):
+                if self.result.value == "0" or self.new_operand == True:
+                    self.result.value = data
+                    self.new_operand = False
+                else:
+                    self.result.value = self.result.value + data
+        except ValueError:
+            pass
+
+        self.update()
+
+    def reset(self):
+        self.new_operand = True
+
+def main(page: Page):
+    page.title = "Calc App"
+    # create application instance
+    calc = CalculatorApp()
+
+    # add application's root control to the page
+    page.add(calc)
+
+
+ft.app(target=main)

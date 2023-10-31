@@ -1,44 +1,42 @@
-# MObility
+# Mobilty
 
-
-
-# dependecia
+# dependência
 * python
 * pip
 * requests
 * python_dot
 
-# inicio
+# começar
 
-1. copia el repositorio
-   `git clone https://github.com/AbrahanMaigua/change.git`
+1. copie o repositório
+    `git clone https://github.com/AbrahanMaigua/change.git`
   
-3. crea un entorno virtual y instala las dependecias
+3. crie um ambiente virtual e instale dependências
    
-   `python -m venv mobility`
-   * activa el entorno virtual
-      * linux (bash/zsh)
-         ```source mobility/bin/activate```
-      * windonsw (cmd)
-          `mobility/Script/activate.bat`
-   * instala las dependecias
-     * ``pip install -r requirements.txt``
+    `python -m mobility venv`
+    * ativar o ambiente virtual
+       * linux (bash/zsh)
+         ```mobility/bin/ativar```
+       * windonsw (cmd)
+           `mobility/Script/activate.bat`
+   * instalar dependências
+      * ``pip install -r requisitos.txt``
  
-7. app id
+7. ID do aplicativo
    
-   accede a [Open pix]() vea al menu a  api/pulugin crea una nueva api/plugin
-   coloca el nombre a la api seleciona api rest y seleciona la cunta que vas a utilizar
-   luego copias la App ID
+    acesse [Open pix]() veja menu api/pulugin crie uma nova api/plugin
+    nomeie a API, selecione rest api e selecione a conta que você vai usar
+    em seguida, copie o ID do aplicativo
 
-5. crea un archivo .env
+5. crie um arquivo .env
    
-   crea un archivo sin extecion llamdo .env donde guradar el app id remplasa
-   por APP_ID por la app id que te da open pix   
-   `app_id='APP_ID'`
+    Crie um arquivo sem extensão chamado .env onde você pode armazenar o ID do aplicativo substituto
+    pelo **APP_ID** pelo id do app que o open pix te dá
+    `APP_ID='APP_ID'`
    
-9. genera un codigo Qr
-    `python pixadd.py`
+9. gerar um código QR
+     `python logit.py`
 
-# documentacion
-* [open pix](https://developers.openpix.com.br/)
+#documentação
+* [abrir pix](https://developers.openpix.com.br/)
 * [python ven](https://docs.python.org/3/library/venv.html)
