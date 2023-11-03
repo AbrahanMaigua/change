@@ -13,10 +13,12 @@ from flet import (
     
 )
 class CalculatorApp(UserControl):
-
+    def __init__(self, page=None):
+        self.page = page
     def btn(self,text,
             bg=colors.BLUE_GREY_100,
-            color=colors.BLACK, expand=1,):
+            color=colors.BLACK, expand=1,
+            ):
         
         return  ElevatedButton(text=text, 
                                bgcolor=bg,
@@ -25,7 +27,7 @@ class CalculatorApp(UserControl):
                                on_click=self.button_clicked,
                                data=text )
     
-    def btnIcon(self, name, color, bg):
+    def btnIcon(self, name, color, bg, on_click=None):
         return ft.ElevatedButton(
                     bgcolor=bg,
                     content=ft.Row(
@@ -33,7 +35,10 @@ class CalculatorApp(UserControl):
                             ft.Icon(name=name, color=color),
                         ],
                     alignment=ft.MainAxisAlignment.CENTER,
+
                     ),
+                    on_click=on_click,
+                    data='x'
                 )
     def build(self):
         self.reset()
@@ -75,10 +80,13 @@ class CalculatorApp(UserControl):
                     Row(
                         controls=[
                             
-                            self.btnIcon(ft.icons.DELETE_OUTLINE, 'white', colors.RED),
+                            self.btnIcon(ft.icons.DELETE_OUTLINE, 'white', colors.RED, 
+                                         on_click=self.button_clicked),
 
                             self.btn(text="0"),
-                            self.btnIcon(ft.icons.CHECK, 'white', colors.GREEN),
+                            self.btnIcon(ft.icons.CHECK, 'white', 
+                                         colors.GREEN, 
+                                         on_click=lambda _: self.page.go(f"/pay/{self.result.value}")),
 
                         ]
                     ),
@@ -98,20 +106,12 @@ class CalculatorApp(UserControl):
                 else:
                     self.result.value = self.result.value + data
         except ValueError:
-            pass
+            if data == 'x':
+               self.result.value = self.result.value[:-1]
+                
 
-        self.update()
+        self.page.update()
 
     def reset(self):
         self.new_operand = True
 
-def main(page: Page):
-    page.title = "Calc App"
-    # create application instance
-    calc = CalculatorApp()
-
-    # add application's root control to the page
-    page.add(calc)
-
-
-ft.app(target=main)

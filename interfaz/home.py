@@ -1,4 +1,4 @@
-from typing import Any, Optional, Union
+from typing import Any, List, Optional, Union
 import flet as ft
 from flet import (
     Column,
@@ -16,7 +16,7 @@ from flet import (
 from flet_core.buttons import ButtonStyle
 from flet_core.control import Control, OptionalNumber
 from flet_core.ref import Ref
-from flet_core.types import AnimationValue, OffsetValue, ResponsiveNumber, RotateValue, ScaleValue
+from flet_core.types import AnimationValue, ClipBehavior, OffsetValue, ResponsiveNumber, RotateValue, ScaleValue
 
 
 class home(UserControl):
@@ -56,12 +56,11 @@ class home(UserControl):
             content=Column(
                 
                 controls=[
-                    
                     Row(
                         alignment=ft.MainAxisAlignment.CENTER,
                         controls=[
                             ft.Image(
-                                height=400,
+                                height=300,
                                 width=300,
                                 src=url,
                                 )
@@ -73,12 +72,7 @@ class home(UserControl):
                             self.btn(text="4"),
                         ]
                     ),
-                    Row(
-                        controls=[
-                            self.btn(text="9"),
-                            self.btn(text="errors",ref='btnPay'),
-                        ]
-                    ),
+                    
                 ]
             ),
         )

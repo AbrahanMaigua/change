@@ -23,13 +23,10 @@ class Countdown(ft.UserControl):
             self.seconds -= 1
 
     def build(self):
-        self.countdown = ft.Text(size=70)
+        self.countdown = ft.Text()
         return self.countdown
 
 def main(page: ft.Page):
-    page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.add(
-        ft.Row([Countdown(320)],
-               alignment=ft.MainAxisAlignment.CENTER))
+    page.add(Countdown(120), Countdown(60))
 
 ft.app(target=main)

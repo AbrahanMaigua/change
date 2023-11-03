@@ -1,12 +1,31 @@
 import flet as ft
-import home
+from flet import colors, ElevatedButton
+import home, pay, button
 
 def main(page: ft.Page):
+    def btn(text,
+            bg=colors.BLUE_GREY_100,
+            color=colors.BLACK, expand=1,
+            on_click=None,
+            ref=None):
+        return  ElevatedButton(text=text, 
+                               bgcolor=bg,
+                               color=color,
+                               expand=expand,
+                               on_click=on_click,
+                               data=text,
+                               height=100,
+                               width=100,
+                               ref=ref )
+
+    def go_pay(e):
+        page.route = "/pay"
+        page.update()
 
     def route_change(route):
         troute = ft.TemplateRoute(page.route)
 
-        if troute.match("/s/:id"):
+        if troute.match("/pay/:id"):
             print("Book view ID:", troute.id)
         elif troute.match("/account/:account_id/orders/:order_id"):
             print("Account:", troute.account_id, "Order:", troute.order_id)
@@ -19,19 +38,38 @@ def main(page: ft.Page):
             ft.View(
                 "/",
                 [
-                    ft.AppBar(title=ft.Text("Flet app"), bgcolor=ft.colors.SURFACE_VARIANT),
                     home.home(),
+                    ft.Row(
+                        controls=[
+                            btn(text="200", on_click=lambda _: page.go("/pay/200")),
+                            btn(text="error", on_click=lambda _: page.go("/btn")),
+                        ]
+                    ),
                     
                 ],
             )
         )
-        if page.route == "/store":
+        if troute.match("/pay/:id"):
             page.views.append(
                 ft.View(
-                    "/store/:id",
+                    "/pay/:id",
+                    [
+                        ft.AppBar(title=ft.Text("Store"),
+                                  bgcolor=ft.colors.SURFACE_VARIANT),
+                        pay.build(troute)
+
+                    ],
+                )
+            )
+            page.update()
+
+        elif troute.match("/btn"):
+            page.views.append(
+                ft.View(
+                    "btn",
                     [
                         ft.AppBar(title=ft.Text("Store"), bgcolor=ft.colors.SURFACE_VARIANT),
-                        ft.ElevatedButton("Go Home", on_click=lambda _: page.go("/")),
+                        button.CalculatorApp(page).build()
                     ],
                 )
             )
