@@ -4,30 +4,32 @@ from dotenv import dotenv_values
 import countdown
 
 def build(page):
-    """
-    """
-
     print(page.id)
     config = dotenv_values(".env") 
     appid  = config['APP_ID']
     pix    = pixadd.create_cob(appid,page.id+'00', 'teste interfaz')
     qr     = pixadd.get_cob(appid,pix[1])
     print(qr['charge'])
-    #print(qr['charge'])
-    pixaid = 2030
+    pixid = qr['charge']['correlationID']
 
-    print(page)
 
-    url = "https://api.openpix.com.br/openpix/charge/brcode/image/35c15841-bb42-4000-a31c-829efb85b821.png"
+    url = qr['charge']['qrCodeImage']
+
     return ft.Row(
                 controls=[
                     
                     ft.Column([
-                        countdown.Countdown(50,page),
+                        countdown.Countdown(10,page,pixid,appid, check_Trastion=True),
+                        #countdown.Countdown(10),
                         ft.Image(src=url, height=400, width=300),
 
                     ],
+                    spacing=0,
+
+                    alignment=ft.MainAxisAlignment.START,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER
                     )
                     ],
                    alignment=ft.MainAxisAlignment.CENTER,
+                   
         )

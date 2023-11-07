@@ -1,10 +1,18 @@
-import flet as ft
 import time, threading
+from lib import pixadd
+import flet as ft
+
 
 class Countdown(ft.UserControl):
-    def __init__(self, seconds, page ):
+    def __init__(self, seconds, page=None,
+                 pixid=None, appid=None, 
+                 check_Trastion=False):
         super().__init__()
         self.seconds = seconds
+        self.check_Trastion = check_Trastion
+        self.pixid   = pixid
+        self.appid   = appid
+
 
     def did_mount(self):
         self.running = True
@@ -21,9 +29,27 @@ class Countdown(ft.UserControl):
             self.update()
             time.sleep(1)
             self.seconds -= 1
-            print(secs, end='\r')
-            
+            #print(secs, end='\r')
+            if self.check_Trastion:
+                self.check()
+
+    def check(self):
+       status = pixadd.get_cob(self.appid,self.pixid )
+       status = status['charge']['status']
+       
+
+       if status == 'ACTIVE':
+          print('esperado pagamento', end='\r')
+          if self.countdown.value == '00:01':
+             self.page.go(f"/")
+              
+
+       else:
+          print('pago! pago!', end='\r')
+          self.page.go(f"/carga/1200")
+
+           
 
     def build(self):
-        self.countdown = ft.Text()
+        self.countdown = ft.Text(size=70)
         return self.countdown

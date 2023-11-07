@@ -1,6 +1,8 @@
 import flet as ft
 from flet import colors, ElevatedButton
 import home, pay, button
+import countdown
+
 
 def main(page: ft.Page):
     def btn(text,
@@ -72,6 +74,24 @@ def main(page: ft.Page):
                     [
                         ft.AppBar(title=ft.Text("Store"), bgcolor=ft.colors.SURFACE_VARIANT),
                         button.CalculatorApp(page).build()
+                    ],
+                )
+            )
+        elif troute.match("/carga/:timpo"):
+            page.views.append(
+                ft.View(
+                    
+                    "/carga/:timpo",
+                    [
+                       ft.Row([
+                           countdown.Countdown(int(troute.timpo))
+
+
+                       ],
+                       alignment=ft.MainAxisAlignment.CENTER,
+                       vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                       )
+                       
                     ],
                 )
             )
