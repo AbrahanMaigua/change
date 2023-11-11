@@ -13,14 +13,14 @@
   
 3. crie um ambiente virtual e instale dependências
    
-    `python -m mobility venv`
+    `python -m venv mobility`
     * ativar o ambiente virtual
        * linux (bash/zsh)
-         ```mobility/bin/ativar```
+         ```mobility/bin/activate```
        * windonsw (cmd)
-           `mobility/Script/activate.bat`
+           `mobility/Script/activate.bat.bat`
    * instalar dependências
-      * ``pip install -r requisitos.txt``
+      * ``pip install -r requirements.txt``
  
 7. ID do aplicativo
    
