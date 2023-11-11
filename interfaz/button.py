@@ -47,12 +47,12 @@ class CalculatorApp(UserControl):
         # application's root control (i.e. "view") containing all other controls
         return Container(
             padding=20,
+            width=300,
             
             alignment=ft.alignment.center,
-
             content=Column(
                 controls=[
-                    Row(controls=[self.result], alignment="end"),
+                    Row(controls=[self.result], alignment="center"),
                     
                     Row(
                      alignment=ft.MainAxisAlignment.CENTER,
@@ -92,6 +92,7 @@ class CalculatorApp(UserControl):
                     ),
                 ]
             ),
+            
         )
 
     def button_clicked(self, e):

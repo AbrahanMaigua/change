@@ -73,7 +73,13 @@ def main(page: ft.Page):
                     "btn",
                     [
                         ft.AppBar(title=ft.Text("Store"), bgcolor=ft.colors.SURFACE_VARIANT),
-                        button.CalculatorApp(page).build()
+                        ft.Row(
+                            [
+                                button.CalculatorApp(page).build()
+                            ],
+                            alignment=ft.MainAxisAlignment.CENTER,
+                            vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                        ),
                     ],
                 )
             )
@@ -110,4 +116,4 @@ def main(page: ft.Page):
     
 
 
-ft.app(target=main, view=ft.AppView.WEB_BROWSER)
+ft.app(target=main)
