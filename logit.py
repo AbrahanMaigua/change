@@ -1,5 +1,5 @@
 import time
-from lib.pixadd import *
+from interfaz.lib.pixadd import *
 from dotenv import dotenv_values
 import os
 
