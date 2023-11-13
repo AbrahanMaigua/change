@@ -18,7 +18,7 @@
        * linux (bash/zsh)
          ```mobility/bin/activate```
        * windonsw (cmd)
-           `mobility/Script/activate.bat.bat`
+           `mobility\Scripts\activate.bat`
    * instalar dependências
       * ``pip install -r requirements.txt``
  
