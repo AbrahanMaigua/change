@@ -20,6 +20,10 @@ from flet_core.types import AnimationValue, ClipBehavior, OffsetValue, Responsiv
 
 
 class home(UserControl):
+    def add(self):
+        pass
+    def delete(self):
+        pass
 
     def btn(self,text,
             bg=colors.BLUE_GREY_100,
@@ -48,14 +52,7 @@ class home(UserControl):
                 )
     def build(self):
         url = 'https://picsum.photos/400/300?1'
-
-        # application's root control (i.e. "view") containing all other controls
-        return Container(
-            padding=5,
-            alignment=ft.alignment.center,
-            content=Column(
-                
-                controls=[
+        """
                     Row(
                         alignment=ft.MainAxisAlignment.CENTER,
                         controls=[
@@ -66,10 +63,66 @@ class home(UserControl):
                                 )
                         ]
                     ),
+                    """
+                  
+        # application's root control (i.e. "view") containing all other controls
+        return Container(
+            padding=1,
+            alignment=ft.alignment.center,
+            content=Column(
+                
+                controls=[
+                    Row(
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        controls=[
+                            ft.Text(
+                                
+                                value='Seja Ben-vindo!\nEscolhea o Tempo de recarga ',
+                                height=230,
+                                text_align='center',
+                                size=20
+                                )
+                        ]
+                    ),
+                      Row(
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        spacing=0,
+                        run_spacing=0,
+
+                        controls=[
+                            ft.IconButton(
+                                        icon=ft.icons.DELETE_OUTLINE, 
+                                        bgcolor='white',
+                                ),
+                                   
+                            ft.Text(
+                                
+                                value='00:00',
+                                text_align='center',
+                                size=20,
+                                color='gray'
+                                ),
+                                ft.Stack(
+                                    
+                                    [
+                                    ft.IconButton(
+                                        icon=ft.Icon(color='RED', name=ft.icons.DELETE_OUTLINE), 
+                                        bgcolor='white',
+                                    
+                                    ),
+                                    
+
+                                   ],
+
+                                ),
+                               
+
+                        ]
+                    ),
                     Row(
                         controls=[
-                            self.btn(text="9"),
-                            self.btn(text="4"),
+                            self.btn(text="15 min"),
+                            self.btn(text="30 min"),
                         ]
                     ),
                     

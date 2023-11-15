@@ -43,8 +43,8 @@ def main(page: ft.Page):
                     home.home(),
                     ft.Row(
                         controls=[
-                            btn(text="200", on_click=lambda _: page.go("/pay/200")),
-                            btn(text="error", on_click=lambda _: page.go("/btn")),
+                            btn(text="1 hora", on_click=lambda _: page.go("/pay/200")),
+                            btn(text="Personalizado", on_click=lambda _: page.go("/btn")),
                         ]
                     ),
                     
