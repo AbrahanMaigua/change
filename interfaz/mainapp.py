@@ -8,6 +8,7 @@ def main(page: ft.Page):
     def btn(text,
             bg=colors.BLUE_GREY_100,
             color=colors.BLACK, expand=1,
+            data=0,
             on_click=None,
             ref=None):
         return  ElevatedButton(text=text, 
@@ -43,7 +44,7 @@ def main(page: ft.Page):
                     home.home(),
                     ft.Row(
                         controls=[
-                            btn(text="1 hora", on_click=lambda _: page.go("/pay/200")),
+                            btn(text="1 hora", on_click=home.home.add, data='60'),
                             btn(text="Personalizado", on_click=lambda _: page.go("/btn")),
                         ]
                     ),

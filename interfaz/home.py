@@ -20,10 +20,17 @@ from flet_core.types import AnimationValue, ClipBehavior, OffsetValue, Responsiv
 
 
 class home(UserControl):
-    def add(self):
-        pass
-    def delete(self):
-        pass
+    def add(self, e):
+        con = self.contador.value
+        self.seconds = e.control.data
+        print(con)
+        mins, secs = divmod(self.seconds, 60)
+        self.contador.value = "{:02d}:{:02d}".format(mins, secs)
+
+
+    def delete(self, e):
+        self.contador.value = "00:00"
+    
 
     def btn(self,text,
             bg=colors.BLUE_GREY_100,
@@ -66,6 +73,12 @@ class home(UserControl):
                     """
                   
         # application's root control (i.e. "view") containing all other controls
+        self.contador =  ft.Text(
+                            value='00:00',
+                            text_align='center',
+                            size=20,
+                            color='gray'
+                         ),
         return Container(
             padding=1,
             alignment=ft.alignment.center,
@@ -90,33 +103,36 @@ class home(UserControl):
                         run_spacing=0,
 
                         controls=[
-                            ft.IconButton(
-                                        icon=ft.icons.DELETE_OUTLINE, 
-                                        bgcolor='white',
-                                ),
-                                   
-                            ft.Text(
-                                
-                                value='00:00',
-                                text_align='center',
-                                size=20,
-                                color='gray'
-                                ),
-                                ft.Stack(
-                                    
-                                    [
-                                    ft.IconButton(
-                                        icon=ft.Icon(color='RED', name=ft.icons.DELETE_OUTLINE), 
-                                        bgcolor='white',
-                                    
-                                    ),
-                                    
+                         ft.ElevatedButton(
+                            bgcolor="white",
+                            content=ft.Row(
+                                [
+                                    ft.Icon(name=ft.icons.CHECK,
+                                            color='red'),
+                                ],
+                            alignment=ft.MainAxisAlignment.CENTER,
 
-                                   ],
+                            ),
+                            data='x',
+                            on_click=Page.go(lambda _: self.page.go("/method") )
+                        ),
+                         self.contador,
+                         ft.ElevatedButton(
+                            bgcolor="white",
+                            content=ft.Row(
+                                [
+                                   ft.Icon(name=ft.icons.DELETE_OUTLINE,
+                                           color='GREEN'),
+                                ],
+                                alignment=ft.MainAxisAlignment.CENTER,
+                                height=5,
+                                width=5,
 
                                 ),
-                               
+                                on_click=self.delete,
 
+                                data='x'
+                        ),
                         ]
                     ),
                     Row(
