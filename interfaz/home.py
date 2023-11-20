@@ -78,7 +78,7 @@ class home(UserControl):
                             text_align='center',
                             size=20,
                             color='gray'
-                         ),
+                         )
         return Container(
             padding=1,
             alignment=ft.alignment.center,
@@ -97,7 +97,7 @@ class home(UserControl):
                                 )
                         ]
                     ),
-                      Row(
+                    Row(
                         alignment=ft.MainAxisAlignment.CENTER,
                         spacing=0,
                         run_spacing=0,
@@ -114,7 +114,7 @@ class home(UserControl):
 
                             ),
                             data='x',
-                            on_click=Page.go(lambda _: self.page.go("/method") )
+                            #on_click=lambda _: self.page.go("/")
                         ),
                          self.contador,
                          ft.ElevatedButton(
@@ -130,7 +130,6 @@ class home(UserControl):
 
                                 ),
                                 on_click=self.delete,
-
                                 data='x'
                         ),
                         ]
