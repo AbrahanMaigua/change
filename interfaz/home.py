@@ -21,31 +21,31 @@ from flet_core.types import AnimationValue, ClipBehavior, OffsetValue, Responsiv
 
 class home(UserControl):
     def add(self, e):
-        con = self.contador.value
-        self.seconds = e.control.data
-        print(con)
+        self.seconds += int(e.control.data)
         mins, secs = divmod(self.seconds, 60)
         self.contador.value = "{:02d}:{:02d}".format(mins, secs)
-
+        self.contador.update()
+        print(self.contador.value)
 
     def delete(self, e):
+        self.seconds = 0
         self.contador.value = "00:00"
-    
+        self.contador.update()
 
     def btn(self,text,
             bg=colors.BLUE_GREY_100,
             color=colors.BLACK, expand=1,
             on_click=None,
-            ref=None):
+            ref=None, data=0):
         return  ElevatedButton(text=text, 
                                bgcolor=bg,
                                color=color,
                                expand=expand,
-                               on_click=None,
-                               data=text,
+                               on_click=on_click,
+                               data=data,
                                height=100,
                                width=100,
-                               ref=ref )
+                               ref=ref)
     
     def btnIcon(self, name, color, bg):
         return ft.ElevatedButton(
@@ -58,6 +58,7 @@ class home(UserControl):
                     ),
                 )
     def build(self):
+        self.seconds = 0
         url = 'https://picsum.photos/400/300?1'
         """
                     Row(
@@ -108,13 +109,13 @@ class home(UserControl):
                             content=ft.Row(
                                 [
                                     ft.Icon(name=ft.icons.CHECK,
-                                            color='red'),
+                                            color='GREEN'),
                                 ],
                             alignment=ft.MainAxisAlignment.CENTER,
 
                             ),
                             data='x',
-                            #on_click=lambda _: self.page.go("/")
+                            on_click=lambda _: self.page.go(f"/check/{self.contador.value}")
                         ),
                          self.contador,
                          ft.ElevatedButton(
@@ -122,12 +123,9 @@ class home(UserControl):
                             content=ft.Row(
                                 [
                                    ft.Icon(name=ft.icons.DELETE_OUTLINE,
-                                           color='GREEN'),
+                                           color='RED'),
                                 ],
                                 alignment=ft.MainAxisAlignment.CENTER,
-                                height=5,
-                                width=5,
-
                                 ),
                                 on_click=self.delete,
                                 data='x'
@@ -136,8 +134,8 @@ class home(UserControl):
                     ),
                     Row(
                         controls=[
-                            self.btn(text="15 min"),
-                            self.btn(text="30 min"),
+                            self.btn(text="15 min",  on_click=self.add, data='15'),
+                            self.btn(text="30 min", on_click=self.add, data='30'),
                         ]
                     ),
                     

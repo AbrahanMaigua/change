@@ -1,9 +1,10 @@
 import flet as ft
 from flet import colors, ElevatedButton
-import home, pay, button
+import home, pay, button, checking 
 import countdown
 
 
+    
 def main(page: ft.Page):
     def btn(text,
             bg=colors.BLUE_GREY_100,
@@ -16,7 +17,7 @@ def main(page: ft.Page):
                                color=color,
                                expand=expand,
                                on_click=on_click,
-                               data=text,
+                               data=data,
                                height=100,
                                width=100,
                                ref=ref )
@@ -35,16 +36,16 @@ def main(page: ft.Page):
         else:
             print("Unknown route")
             page.title = "Routes Example"
-
+        a = home.home(page)
         page.views.clear()
         page.views.append(
             ft.View(
                 "/",
                 [
-                    home.home(),
+                    a,
                     ft.Row(
                         controls=[
-                            btn(text="1 hora", on_click=home.home.add, data='60'),
+                            btn(text="1 hora", on_click=a.add, data=60),
                             btn(text="Personalizado", on_click=lambda _: page.go("/btn")),
                         ]
                     ),
@@ -73,7 +74,7 @@ def main(page: ft.Page):
                 ft.View(
                     "btn",
                     [
-                        ft.AppBar(title=ft.Text("Store"), bgcolor=ft.colors.SURFACE_VARIANT),
+                        ft.AppBar(title=ft.Text(""), bgcolor=ft.colors.SURFACE_VARIANT),
                         ft.Row(
                             [
                                 button.CalculatorApp(page).build()
@@ -87,18 +88,31 @@ def main(page: ft.Page):
         elif troute.match("/carga/:timpo"):
             page.views.append(
                 ft.View(
-                    
-                    "/carga/:timpo",
+                   "/carga/:timpo",
                     [
                        ft.Row([
                            countdown.Countdown(int(troute.timpo))
-
-
                        ],
                        alignment=ft.MainAxisAlignment.CENTER,
                        vertical_alignment=ft.CrossAxisAlignment.CENTER,
                        )
                        
+                    ],
+                )
+            )
+        elif troute.match('/check/:time'):
+               page.views.append(
+                ft.View(
+                    "/check/:time",
+                    [
+                        ft.AppBar(title=ft.Text(""), bgcolor=ft.colors.SURFACE_VARIANT),
+                        ft.Row(
+                            [
+                               checking.check(page).build()
+                            ],
+                            alignment=ft.MainAxisAlignment.CENTER,
+                            vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                        ),
                     ],
                 )
             )

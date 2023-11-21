@@ -15,6 +15,7 @@ from flet import (
 class CalculatorApp(UserControl):
     def __init__(self, page=None):
         self.page = page
+        
     def btn(self,text,
             bg=colors.BLUE_GREY_100,
             color=colors.BLACK, expand=1,
@@ -35,7 +36,6 @@ class CalculatorApp(UserControl):
                             ft.Icon(name=name, color=color),
                         ],
                     alignment=ft.MainAxisAlignment.CENTER,
-
                     ),
                     on_click=on_click,
                     data='x'
@@ -103,7 +103,7 @@ class CalculatorApp(UserControl):
             if int(data) in tuple(range(0,10)):
                 if self.result.value == "0" or self.new_operand == True:
                     self.result.value = data
-                    self.new_operand = False
+                    self.new_operand  = False
                 else:
                     self.result.value = self.result.value + data
         except ValueError:
