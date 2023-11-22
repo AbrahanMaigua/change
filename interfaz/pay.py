@@ -4,7 +4,6 @@ from dotenv import dotenv_values
 import countdown
 
 def build(page):
-    print(page.id)
     config = dotenv_values(".env") 
     appid  = config['APP_ID']
     pix    = pixadd.create_cob(appid,page.id+'00', 'teste interfaz')

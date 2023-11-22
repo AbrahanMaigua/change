@@ -18,10 +18,26 @@ class check(UserControl):
     def __init__(self, page=None):
         self.page = page
         
+    def btn(self,text,
+            bg=colors.BLUE_GREY_100,
+            color=colors.BLACK, expand=1,
+            on_click=None,
+            ref=None, data=0):
+        return  ElevatedButton(text=text, 
+                               bgcolor=bg,
+                               color=color,
+                               expand=expand,
+                               on_click=on_click,
+                               data=data,
+                               height=100,
+                               width=100,
+                               ref=ref)
    
-    def build(self):
+    def build(self, time):
         self.result = Text(value="0", color=colors.BLACK, size=20)
 
+        price = '12,25'
+        print(time)
         # application's root control (i.e. "view") containing all other controls
         return Container(
            
@@ -48,7 +64,7 @@ class check(UserControl):
                             size=15
                         ),
                         ft.Text(
-                            value='             R$ 12,25',
+                            value=f'             R$ {price}',
                             text_align='END',
                             size=15
                         ),
@@ -60,20 +76,34 @@ class check(UserControl):
                         ft.Text(
                             value='tiempo de Carga',
                             text_align='START',
-                            size=15
+                            size=15,
+                            height=80
+
                         ),
                         ft.Text(
                             value='       6:00:00',
                             text_align='END',
                             size=15,
-                            height=230,
+                            height=80
+                            
 
                         ),
-                        # adicionar botonos pagamentos
-                        # pix
-                        # caton de convenio 
+             
 
-                        ]    
+                        ]
+
+                    ),
+                    Row(
+                        controls=[
+                           ft.ElevatedButton(
+                               text='Pix',
+                               on_click=lambda _: self.page.go(f"/pay/{price.replace(',', '')}")
+                           ),
+                           ft.ElevatedButton(
+                               text='mobility cart'
+
+                          )
+                        ]
                     ),
 
                     ],

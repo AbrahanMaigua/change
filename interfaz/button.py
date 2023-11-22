@@ -15,7 +15,11 @@ from flet import (
 class CalculatorApp(UserControl):
     def __init__(self, page=None):
         self.page = page
-        
+        self.seconds = 0
+        self.con1 = 1 # numeros pincipales 00 00 00
+        self.con2 = 1 # numeros secudarios 0
+
+
     def btn(self,text,
             bg=colors.BLUE_GREY_100,
             color=colors.BLACK, expand=1,
@@ -42,7 +46,8 @@ class CalculatorApp(UserControl):
                 )
     def build(self):
         self.reset()
-        self.result = Text(value="0", color=colors.BLACK, size=20)
+        self.contador = 0
+        self.result = Text(value="00:00:12", color=colors.BLACK, size=20)
 
         # application's root control (i.e. "view") containing all other controls
         return Container(
@@ -86,7 +91,7 @@ class CalculatorApp(UserControl):
                             self.btn(text="0"),
                             self.btnIcon(ft.icons.CHECK, 'white', 
                                          colors.GREEN, 
-                                         on_click=lambda _: self.page.go(f"/pay/{self.result.value}")),
+                                         on_click=lambda _: self.page.go(f"/check/{self.result.value}")),
 
                         ]
                     ),
@@ -95,20 +100,38 @@ class CalculatorApp(UserControl):
             
         )
 
+    def convert(self, seconds): 
+        min, sec = divmod(seconds, 60) 
+        hour, min = divmod(min, 60) 
+        return "%d:%02d:%02d" % (hour, min, sec) 
+        
+
     def button_clicked(self, e):
         data = e.control.data
-        print(self.result.value)
+        value = self.result.value.split(':') # [00, 00, 00]
         try:
-               
             if int(data) in tuple(range(0,10)):
-                if self.result.value == "0" or self.new_operand == True:
-                    self.result.value = data
-                    self.new_operand  = False
-                else:
-                    self.result.value = self.result.value + data
+                con = list(value[-self.con1]) # [0, 0]
+                # 00 00 00 
+                #        ^-1 self.con2
+                con[-self.con2] = data
+                value[-self.con2] = ''.join(con) # modifica la fila
+                # 00 00 00 
+                #       ^^
+                print(value)
+                if self.con2 >= 2:
+                    self.con1 += 1 
+                    self.con2 = 1 
+
+                self.con2 += 1
+                 
+                self.result.value = ':'.join(value)
         except ValueError:
             if data == 'x':
-               self.result.value = self.result.value[:-1]
+               self.contador -= 1
+               if self.contador // 3 == 1 or 0:
+                  self.contador -= 1
+               self.result.value[:-self.contador] = 0
                 
 
         self.page.update()

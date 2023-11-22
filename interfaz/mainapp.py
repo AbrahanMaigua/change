@@ -100,15 +100,16 @@ def main(page: ft.Page):
                     ],
                 )
             )
+
         elif troute.match('/check/:time'):
-               page.views.append(
-                ft.View(
+            page.views.append(
+               ft.View(
                     "/check/:time",
                     [
                         ft.AppBar(title=ft.Text(""), bgcolor=ft.colors.SURFACE_VARIANT),
                         ft.Row(
                             [
-                               checking.check(page).build()
+                               checking.check(page).build(troute.time)
                             ],
                             alignment=ft.MainAxisAlignment.CENTER,
                             vertical_alignment=ft.CrossAxisAlignment.CENTER,
@@ -116,6 +117,8 @@ def main(page: ft.Page):
                     ],
                 )
             )
+            print(troute.time)
+            
         page.update()
 
     def view_pop(view):
