@@ -5,10 +5,14 @@ import countdown
 
 def build(page):
     config = dotenv_values(".env") 
+    print(page.id)
+    price, segs = page.id.split('&')[0] + '', page.id.split('&')[1]
+
     appid  = config['APP_ID']
-    pix    = pixadd.create_cob(appid,page.id+'00', 'teste interfaz')
+    pix    = pixadd.create_cob(appid,price, 'teste interfaz')
+    print(pix)
     qr     = pixadd.get_cob(appid,pix[1])
-    print(qr['charge'])
+    #print(qr['charge'])
     pixid = qr['charge']['correlationID']
 
 
@@ -18,7 +22,9 @@ def build(page):
                 controls=[
                     
                     ft.Column([
-                        countdown.Countdown(10,page,pixid,appid, check_Trastion=True),
+                        countdown.Countdown(60,page,pixid,appid, 
+                                            check_Trastion=True,
+                                            time=segs),
                         #countdown.Countdown(10),
                         ft.Image(src=url, height=400, width=300),
 

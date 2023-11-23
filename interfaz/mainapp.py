@@ -45,7 +45,7 @@ def main(page: ft.Page):
                     a,
                     ft.Row(
                         controls=[
-                            btn(text="1 hora", on_click=a.add, data=60),
+                            btn(text="1 hora", on_click=a.add, data=3600),
                             btn(text="Personalizado", on_click=lambda _: page.go("/btn")),
                         ]
                     ),
@@ -91,7 +91,7 @@ def main(page: ft.Page):
                    "/carga/:timpo",
                     [
                        ft.Row([
-                           countdown.Countdown(int(troute.timpo))
+                           countdown.Countdown(int(troute.timpo), time=int(troute.timpo))
                        ],
                        alignment=ft.MainAxisAlignment.CENTER,
                        vertical_alignment=ft.CrossAxisAlignment.CENTER,

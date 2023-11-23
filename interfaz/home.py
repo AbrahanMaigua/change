@@ -23,13 +23,15 @@ class home(UserControl):
     def add(self, e):
         self.seconds += int(e.control.data)
         mins, secs = divmod(self.seconds, 60)
-        self.contador.value = "{:02d}:{:02d}".format(mins, secs)
+        hour, min = divmod(mins, 60) 
+
+        self.contador.value = "%d:%02d:%02d" % (hour, min, secs) 
         self.contador.update()
         print(self.contador.value)
 
     def delete(self, e):
         self.seconds = 0
-        self.contador.value = "00:00"
+        self.contador.value = "00:00:00"
         self.contador.update()
 
     def btn(self,text,
@@ -75,7 +77,7 @@ class home(UserControl):
                   
         # application's root control (i.e. "view") containing all other controls
         self.contador =  ft.Text(
-                            value='00:00',
+                            value='00:00:00',
                             text_align='center',
                             size=20,
                             color='gray'
@@ -134,8 +136,8 @@ class home(UserControl):
                     ),
                     Row(
                         controls=[
-                            self.btn(text="15 min",  on_click=self.add, data='15'),
-                            self.btn(text="30 min", on_click=self.add, data='30'),
+                            self.btn(text="15 min",  on_click=self.add, data='900'),
+                            self.btn(text="30 min", on_click=self.add, data='1800'),
                         ]
                     ),
                     

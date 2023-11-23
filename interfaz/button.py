@@ -47,7 +47,7 @@ class CalculatorApp(UserControl):
     def build(self):
         self.reset()
         self.contador = 0
-        self.result = Text(value="00:00:12", color=colors.BLACK, size=20)
+        self.result = Text(value="00:00:00", color=colors.BLACK, size=20)
 
         # application's root control (i.e. "view") containing all other controls
         return Container(
@@ -109,29 +109,33 @@ class CalculatorApp(UserControl):
     def button_clicked(self, e):
         data = e.control.data
         value = self.result.value.split(':') # [00, 00, 00]
+        con = list(value[-self.con1]) # [0, 0]
         try:
             if int(data) in tuple(range(0,10)):
-                con = list(value[-self.con1]) # [0, 0]
                 # 00 00 00 
                 #        ^-1 self.con2
-                con[-self.con2] = data
-                value[-self.con2] = ''.join(con) # modifica la fila
+                con[-self.con2]   = data
+                value[-self.con1] = ''.join(con) # modifica la fila
                 # 00 00 00 
                 #       ^^
-                print(value)
-                if self.con2 >= 2:
-                    self.con1 += 1 
-                    self.con2 = 1 
+                print(self.con1, self.con2 )
+                if self.con2 != 3:
+                    if self.con2 >= 2:
+                    
+                        self.con1 += 1 
+                        self.con2 = 0
 
-                self.con2 += 1
-                 
+                    self.con2 += 1
+                    
                 self.result.value = ':'.join(value)
         except ValueError:
             if data == 'x':
-               self.contador -= 1
-               if self.contador // 3 == 1 or 0:
-                  self.contador -= 1
-               self.result.value[:-self.contador] = 0
+              self.result.value = '00:00:00'
+              self.con1 = 1
+              self.con2 = 1
+
+
+              
                 
 
         self.page.update()

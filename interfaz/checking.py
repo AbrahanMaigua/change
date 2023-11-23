@@ -12,6 +12,7 @@ from flet import (
     colors,
     
 )
+from datetime import timedelta
 
 # terminar la tela hacer que funcione
 class check(UserControl):
@@ -34,9 +35,14 @@ class check(UserControl):
                                ref=ref)
    
     def build(self, time):
+        h, m, s = (str(self.page.route).split('/')[-1]).split(':')
         self.result = Text(value="0", color=colors.BLACK, size=20)
-
-        price = '12,25'
+        valor = 0.002
+        segs  = timedelta(hours=int(h),
+                          minutes=int(m),
+                           seconds=int(s)).total_seconds()
+        price = valor * int(segs)
+        price = "%.2f" % price
         print(time)
         # application's root control (i.e. "view") containing all other controls
         return Container(
@@ -81,7 +87,7 @@ class check(UserControl):
 
                         ),
                         ft.Text(
-                            value='       6:00:00',
+                            value=f'       {time}',
                             text_align='END',
                             size=15,
                             height=80
@@ -97,7 +103,7 @@ class check(UserControl):
                         controls=[
                            ft.ElevatedButton(
                                text='Pix',
-                               on_click=lambda _: self.page.go(f"/pay/{price.replace(',', '')}")
+                               on_click=lambda _: self.page.go(f"/pay/{price.replace('.', '')}&{segs}")
                            ),
                            ft.ElevatedButton(
                                text='mobility cart'
