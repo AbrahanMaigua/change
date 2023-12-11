@@ -1,0 +1,38 @@
+MDBoxLayout:
+    orientation:'vertical'
+    spacing: 80
+   
+    AsyncImage:
+        width: 120
+        source: 'https://i.pinimg.com/564x/a9/f1/5d/a9f15d4e88671d03b03c25a9a97bd361.jpg'
+        allow_stretch: True
+    MDGridLayout:
+        cols: 2
+        spacing: 10
+        padding: 150, 0
+        
+
+
+        MDRoundFlatIconButton:
+            md_bg_color: app.theme_cls.primary_color
+            
+            text: "15 Min"
+            text_color: "white"
+            size_hint_x: .75
+        MDRoundFlatIconButton:
+            md_bg_color: app.theme_cls.primary_color
+            text: "30 Min"
+            text_color: "white"
+            size_hint_x: .75
+
+        MDRoundFlatIconButton:
+            md_bg_color: app.theme_cls.primary_color
+            text: "1 hora"
+            text_color: "white"
+            size_hint_x: .75
+
+        MDRoundFlatIconButton:
+            md_bg_color: app.theme_cls.primary_color
+            text: "personalizado"
+            text_color: "white"
+            size_hint_x: .75

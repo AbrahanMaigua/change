@@ -1,57 +1,31 @@
-'''
-Mesh test
-=========
+from kivymd.app import MDApp
+from kivymd.uix.label import MDLabel
+from kivy.animation import Animation
+from kivy.properties import StringProperty, NumericProperty
+from kivy.lang import Builder
 
-This demonstrates the use of a mesh mode to distort an image. You should see
-a line of buttons across the bottom of a canvas. Pressing them displays
-the mesh, a small circle of points, with different mesh.mode settings.
-'''
+class IncrediblyCrudeClock(MDLabel):
+    a = NumericProperty(120)  # seconds
 
-from kivy.uix.button import Button
-from kivy.uix.widget import Widget
-from kivy.uix.boxlayout import BoxLayout
-from kivy.app import App
-from kivy.graphics import Mesh
-from functools import partial
-from math import cos, sin, pi
+    def start(self):
+        Animation.cancel_all(self)  # stop any current animations
+        self.anim = Animation(a=0, duration=self.a)
+        def finish_callback(animation, incr_crude_clock):
+            incr_crude_clock.text = "FINISHED"
+        self.anim.bind(on_complete=finish_callback)
+        self.anim.start(self)
 
+    def on_a(self, instance, value):
+        mins, secs = divmod(value, 60)
+        hour, mins = divmod(mins, 60) 
+        self.text = "%d:%02d:%02d" % (hour, mins, secs) 
 
-class MeshTestApp(App):
-
-    def change_mode(self, mode, *largs):
-        self.mesh.mode = mode
-
-    def build_mesh(self):
-        """ returns a Mesh of a rough circle. """
-        vertices = []
-        indices = []
-        step = 10
-        istep = (pi * 2) / float(step)
-        for i in range(step):
-            x = 300 + cos(istep * i) * 100
-            y = 300 + sin(istep * i) * 100
-            vertices.extend([x, y, 0, 0])
-            indices.append(i)
-        return Mesh(vertices=vertices, indices=indices)
-
+class TimeApp(MDApp):
     def build(self):
-        wid = Widget()
-        with wid.canvas:
-            self.mesh = self.build_mesh()
+        kv = Builder.load_file('main.kv')
+        #crudeclock = IncrediblyCrudeClock()
+        #crudeclock.start()
+        return kv
 
-        layout = BoxLayout(size_hint=(1, None), height=50)
-        for mode in ('points', 'line_strip', 'line_loop', 'lines',
-                'triangle_strip', 'triangle_fan'):
-            button = Button(text=mode)
-            button.bind(on_release=partial(self.change_mode, mode))
-            layout.add_widget(button)
-
-        root = BoxLayout(orientation='vertical')
-        root.add_widget(wid)
-        root.add_widget(layout)
-
-        return root
-
-
-if __name__ == '__main__':
-    MeshTestApp().run()
+if __name__ == "__main__":
+    TimeApp().run()
