@@ -1,25 +1,28 @@
-MDBoxLayout:
-    orientation:'vertical'
-   
-    MDLabel:
-        text: "tiempo de Carga:  01:20:00"
+Screen:
     
-    MDLabel:
-        text: 'Total:  R$ 7,20 "
+
+    MDBoxLayout:
+        orientation:'vertical'
+        size_hint_y: 1
+        height: self.minimum_height
+        padding: [200, 50, 0,0]
+
+        MDLabel:
+            id: value
+
+            text: "tiempo de Carga:  01:20:00\n" + "Total:  R$ 7,20"
         
-    MDGridLayout:
-        adaptive_width: True
-        adaptive_height: True
-        cols: 2
-        spacing: 10
-        #pos_hint: {'ceneter': 1}
+        MDGridLayout:
+        
+            cols: 2
+            spacing: 10
 
-        MDRoundFlatIconButton:
-            md_bg_color: app.theme_cls.primary_color
-            text: "pix"
-            text_color: "white"
+            MDRoundFlatIconButton:
+                md_bg_color: app.theme_cls.primary_color
+                text: "pix"
+                text_color: "white"
 
-        MDRoundFlatIconButton:
-            md_bg_color: app.theme_cls.primary_color
-            text: "carton do posto"
-            text_color: "white"
+            MDRoundFlatIconButton:
+                md_bg_color: app.theme_cls.primary_color
+                text: "carton do posto"
+                text_color: "white"

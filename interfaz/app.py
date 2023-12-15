@@ -22,7 +22,7 @@ class IncrediblyCrudeClock(MDLabel):
 
 class TimeApp(MDApp):
     def build(self):
-        kv = Builder.load_file('main.kv')
+        kv = Builder.load_file('btn.kv')
         #crudeclock = IncrediblyCrudeClock()
         #crudeclock.start()
         return kv
