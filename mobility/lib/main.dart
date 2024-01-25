@@ -17,22 +17,36 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   final String imageUrl =
       'https://i.pinimg.com/originals/2c/c8/4d/2cc84d20f5cf39cde7ae169aebf120c5.jpg'; 
-      // Reemplaza con la URL de tu imagen
 
-  String _formatTime() {
-    int hours   = 00;
-    int minutes = (0 % 60);
-    int seconds = (0 % 60);
-    return '$hours:${_twoDigits(minutes)}:${_twoDigits(seconds)}';
+      // Reemplaza con la URL de tu imagen
+  String _formatTime(int totalSeconds) {
+    int hours = totalSeconds ~/ 3600; // 3600 segundos en una hora
+    int remainingSeconds = totalSeconds % 3600;
+    int minutes = remainingSeconds ~/ 60; // El residuo después de las horas, dividido por 60
+    int seconds = remainingSeconds % 60; // El residuo después de los minutos
+    if totalSeconds <= 3600;{
+        return '$hours:${_twoDigits(minutes)}:${_twoDigits(seconds)}';
+
+    }
   }
 
    String _twoDigits(int n) {
     if (n >= 10) return '$n';
     return '0$n';
   }
+
+  int seg = 0;
+
+  String get _t => _formatTime(seg);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +81,7 @@ class MyHomePage extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    _formatTime(),
+                    _t,
                     style: TextStyle(fontSize: 20.0),
                   ),
                   SizedBox(height: 8.0),
@@ -79,7 +93,10 @@ class MyHomePage extends StatelessWidget {
                 icon: Icon(Icons.arrow_forward),
                 onPressed: () {
                   // Acción del botón derecho
-                  print('Botón derecho presionado');
+                  setState(() {
+                            print('reset');
+                            seg = 0;  
+                          });;
                 },
               ),
             ],
@@ -93,10 +110,40 @@ class MyHomePage extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
+                          setState(() {
+                            print('$seg');
+                            seg += 900;  
+                          });
                           // Acción del primer botón
-                          print('Botón 1 presionado');
+                          
                         },
-                        child: Text('Botón 1'),
+                        child: Text('15 min'),
+                      ),
+                      SizedBox(height: 8.0), // Añade espacio entre los botones
+                      ElevatedButton(
+                        onPressed: () {
+                         setState(() {
+                            print('$seg');
+                            seg += 1800;  
+                          });
+                          
+                        },
+                        child: Text('30 min'),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            print('$seg');
+                            seg += 3600;  
+                          });
+                        },
+                        child: Text('1 hora'),
                       ),
                       SizedBox(height: 8.0), // Añade espacio entre los botones
                       ElevatedButton(
@@ -107,28 +154,7 @@ class MyHomePage extends StatelessWidget {
                             MaterialPageRoute(builder: (context) => NewScreen()),
                           );
                         },
-                        child: Text('Botón 2'),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          // Acción del tercer botón
-                          print('Botón 3 presionado');
-                        },
-                        child: Text('Botón 3'),
-                      ),
-                      SizedBox(height: 8.0), // Añade espacio entre los botones
-                      ElevatedButton(
-                        onPressed: () {
-                          // Acción del tercer botón
-                          print('Botón 3 presionado');
-                        },
-                        child: Text('Botón 3'),
+                        child: Text('personalizada'),
                       ),
                     ],
                   ),
