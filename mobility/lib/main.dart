@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // Your existing screen
 import 'btn.dart'; // Import the new screen file
-
+import 'checking.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,11 +32,10 @@ class _MyHomePageState extends State<MyHomePage> {
     int remainingSeconds = totalSeconds % 3600;
     int minutes = remainingSeconds ~/ 60; // El residuo después de las horas, dividido por 60
     int seconds = remainingSeconds % 60; // El residuo después de los minutos
-    if totalSeconds <= 3600;{
-        return '$hours:${_twoDigits(minutes)}:${_twoDigits(seconds)}';
+    
+    return '$hours:${_twoDigits(minutes)}:${_twoDigits(seconds)}';
 
     }
-  }
 
    String _twoDigits(int n) {
     if (n >= 10) return '$n';
@@ -75,6 +74,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   // Acción del botón izquierdo
                   print('Botón izquierdo presionado');
+                  Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Check()),
+                          );
                 },
               ),
               SizedBox(width: 50.0),

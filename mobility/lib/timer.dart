@@ -2,25 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+Function Temporizador() {
   late Stopwatch _stopwatch;
   late Timer _timer;
   bool _isRunning = false;
@@ -76,45 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (n >= 10) return '$n';
     return '0$n';
   }
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Cronómetro'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Tiempo transcurrido:',
-              style: TextStyle(fontSize: 18),
-            ),
-            Text(
-              _formatTime(),
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: _startStop,
-                  child: Text(_isRunning ? 'Detener' : 'Iniciar'),
-                ),
-                SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: _reset,
-                  child: Text('Reiniciar'),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  
 
   @override
   void dispose() {
@@ -123,21 +67,3 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-
-class NewView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Nueva Vista'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Text(
-          '¡Ha pasado un minuto!',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-}
