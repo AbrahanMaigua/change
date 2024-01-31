@@ -1,6 +1,6 @@
 // checking.dart
 import 'package:flutter/material.dart';
-// import 'pix.dart'; error
+import 'pix.dart'; 
 
 
 class Check extends StatelessWidget {
@@ -48,10 +48,10 @@ class Check extends StatelessWidget {
                         onPressed: () {
                           print('15 min');
                           // Acción del primer botón
-                        //  Navigator.push(
-                          //  context,
-                            //MaterialPageRoute(builder: (context) => Pix()),
-                          //);
+                          Navigator.push(
+                             context,
+                             MaterialPageRoute(builder: (context) => CountdownTimer()),
+                           );
                         },
                         child: Text('pix '),
                       ),
