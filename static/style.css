@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+.top {
+    margin-top: 12em !important;
+}
+#counter {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 34px;
+    margin-top: 10em;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+.button {
+    background-color: lightgreen;
+    border: 2px solid green;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+.counter {
+    margin-top: 20px;
+    font-size: 24px;
+}
+
+.container {
+    text-align: center;
+    margin-top: 50px;
+}
+.image {
+    width: 400px;
+    display: block;
+    margin: 0 auto;
+}
+.buttons-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.plain-text {
+    text-decoration: none;
+    color: black;
+}
+
+
+.info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 50px;
+    
+}
+.info-container div {
+    margin: 10px;
+}
+button {
+    background-color: lightgreen;
+    border: 2px solid green;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-right: 30px;
+}
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.text-1 {
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}

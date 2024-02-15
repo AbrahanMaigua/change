@@ -1,0 +1,1 @@
+env\Scripts\flask.exe --app main run

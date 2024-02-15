@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reemplazar Caracteres</title>
+</head>
+<body>
+
+<span id="textoMostrado">00:00:01</span>
+<button onclick="addNumber(9)">+</button>
+<script>
+    let textoInicial = document.getElementById("textoMostrado").textContent;
+    let caracteres = textoInicial.split('');
+    let contador = caracteres.length -1;
+
+
+    function addNumber(num) {
+        console.log(contador)
+
+        if (contador != -1 && caracteres[contador] != ':'  ) {
+            caracteres[contador] = num.toString();
+            contador--;
+        } else  {
+            contador--;
+            addNumber(num)
+        }
+        // Actualizamos solo los caracteres modificados en el texto mostrado
+        document.getElementById("textoMostrado").textContent = caracteres.join('');
+    }
+
+   
+    
+</script>
+
+</body>
+</html>

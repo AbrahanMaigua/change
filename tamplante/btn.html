@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Página 2</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        text-align: center;
+    }
+    .container {
+        margin-top: 50px;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .button {
+        background-color: lightgreen;
+        border: 2px solid green;
+        border-radius: 20px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    .counter {
+        margin-top: 20px;
+        font-size: 24px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <span class="counter" id="counter">00:00:00</div>
+    <div class="grid-container">
+        <button class="button" onclick="addNumber(1)">1</button>
+        <button class="button" onclick="addNumber(2)">2</button>
+        <button class="button" onclick="addNumber(3)">3</button>
+        <button class="button" onclick="addNumber(4)">4</button>
+        <button class="button" onclick="addNumber(5)">5</button>
+        <button class="button" onclick="addNumber(6)">6</button>
+        <button class="button" onclick="addNumber(7)">7</button>
+        <button class="button" onclick="addNumber(8)">8</button>
+        <button class="button" onclick="addNumber(9)">9</button>
+
+        <button class="button" onclick="resetCounter()">X</button>
+        <button class="button" onclick="addNumber(0)">0</button>
+        <button class="button" onclick="resetCounter()">X</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

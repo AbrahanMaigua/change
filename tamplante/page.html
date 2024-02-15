@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botones y Texto</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <img src="https://i.pinimg.com/564x/3c/4b/40/3c4b40a7b3f74a59df7dbaafa3e4e8b4.jpg" alt="Imagen" class="image">
+        <div class="counter">
+            
+            <button style="all: initial;cursor: pointer; "  onclick="resetTime()"> 
+                 <span class="material-symbols-outlined">
+                   close
+                 </span>
+            </button>
+            <span id="counter">00:00:00</span>
+            <a id="sendLink" href="#" class="plain-text">
+
+                <span class="material-symbols-outlined">
+                    done
+                </span>
+                
+            </a>
+        </div>
+        <div class="buttons-container">
+            <button class="button" onclick="incrementTime(5400)">+1 h 30 min</button>
+            <button class="button" onclick="incrementTime(7200)">+2 h</button>
+            <button class="button" onclick="incrementTime(7200)">+2 h</button>
+            <a id="sendLink" href="/btn.html" class="button plain-text">Enviar Tiempo</a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
