@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contador</title>
-<link rel="stylesheet" href="style.css">
-</head>
+
+{{% extends "base.html" %}}
+{% block title %}temporizador{% endblock %}
+{% block content %}
 <body>
 
 <div class="top" id="counter">00:00:10</div>
 <button class="button top" onclick="toggleContador()">Iniciar/Detener</button>
-<script src="script.js"></script>
-
-</body>
-</html>
+{% endblock %}

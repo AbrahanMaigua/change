@@ -24,7 +24,7 @@ function updateSendLink() {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
-    sendLinkElement.href = `otra_pagina.html?hours=${hours}&minutes=${minutes}&seconds=${seconds}`;
+    sendLinkElement.href = `cheking?hours=${hours}&min=${minutes}&seg=${seconds}`;
 }
 
 function updateCounter() {
@@ -65,7 +65,7 @@ function actualizarContador() {
     // Si el contador llega a cero, detenerlo
     if (contador === 0) {
         clearInterval(intervalo); // Detener el contador
-        window.location.href = '/page.html'
+        window.location.href = '/'
         
     }
 }
@@ -113,4 +113,8 @@ let textoInicial = document.getElementById("counter").textContent;
     }
 
    
-    
+
+function pix(total){
+    window.location.href = `pix/${total)}`
+
+}

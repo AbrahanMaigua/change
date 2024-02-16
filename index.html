@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streaming de datos en tiempo real</title>
+</head>
+<body>
+    <div id="dataContainer">
+        <!-- Aquí se mostrarán los datos en tiempo real -->
+    </div>
+
+    <script>
+        const eventSource = new EventSource('/stream'); // Conecta con el servidor SSE
+
+        eventSource.onmessage = function(event) {
+            // Cuando se recibe un mensaje del servidor, actualiza el contenido
+            document.getElementById('dataContainer').innerText = event.data;
+        };
+    </script>
+</body>
+</html>

@@ -1,39 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Página 2</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        text-align: center;
-    }
-    .container {
-        margin-top: 50px;
-    }
-    .grid-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 10px;
-        justify-content: center;
-        margin-top: 20px;
-    }
-    .button {
-        background-color: lightgreen;
-        border: 2px solid green;
-        border-radius: 20px;
-        padding: 10px 20px;
-        cursor: pointer;
-    }
-    .counter {
-        margin-top: 20px;
-        font-size: 24px;
-    }
-</style>
-</head>
-<body>
+
+{{% extends "base.html" %}}
+{% block title %}Botones{% endblock %}
+
+
+{% block content %}
 
 <div class="container">
     <span class="counter" id="counter">00:00:00</div>
@@ -53,8 +23,5 @@
         <button class="button" onclick="resetCounter()">X</button>
     </div>
 </div>
+{% endblock %}
 
-<script src="script.js"></script>
-
-</body>
-</html>

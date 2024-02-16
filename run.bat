@@ -1,1 +1,1 @@
-env\Scripts\flask.exe --app main run
+mob\Scripts\flask.exe --app read run
