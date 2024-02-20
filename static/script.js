@@ -34,6 +34,16 @@ function updateCounter() {
     counterElement.textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
+function sendcheking() {
+    let tiempoInicial = document.getElementById("counter").textContent;
+    let totalSeconds = obtenerSegundos(tiempoInicial);
+
+    const hours   = pad(Math.floor(totalSeconds / 3600));
+    const minutes = pad(Math.floor((totalSeconds % 3600) / 60));
+    const seconds = pad(totalSeconds % 60);
+    window.location.href = `cheking?hours=${hours}&min=${minutes}&seg=${seconds}`
+}
+
 function pad(num) {
     return num.toString().padStart(2, '0');
 }
@@ -115,6 +125,7 @@ let textoInicial = document.getElementById("counter").textContent;
    
 
 function pix(total){
-    window.location.href = `pix/${total)}`
+    window.location.href = `pix/${total}`
 
 }
+

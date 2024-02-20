@@ -22,7 +22,14 @@ body {
     background-color: lightgreen;
     border: 2px solid green;
     border-radius: 20px;
-    padding: 10px 20px;
+    padding: 10px 40px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-right: 30px;
+}
+
+.button a {
+    padding: 30px 20px; !importar
     cursor: pointer;
 }
 .counter {
@@ -38,6 +45,13 @@ body {
     width: 400px;
     display: block;
     margin: 0 auto;
+}
+
+.qr{
+    height: 400px;
+    border-radius: 3pc;
+    margin: 0 auto;
+    margin-top: 10px;
 }
 .buttons-container {
     display: grid;
@@ -64,7 +78,7 @@ body {
 .info-container div {
     margin: 10px;
 }
-button {
+.button {
     background-color: lightgreen;
     border: 2px solid green;
     border-radius: 20px;
@@ -83,3 +97,8 @@ button {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     
 }
+footer {
+    text-align: center;
+    padding-top: 22em;
+    color: #000;
+ }

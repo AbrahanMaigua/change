@@ -10,17 +10,21 @@
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
-  <body>
+  <body {% block onload %}{% endblock %}>
     <div id="content">
         {% block content %}
         {% endblock %}
     </div>
-    <div id="footer">
+
+    <footer>
       {% block footer %}
       &copy; Copyright 2024 by mobility</a>.
       {% endblock %}
-    </div>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-    {% block js %}{% endblock%}
+      
+    </footer>
+    <script src="{{ url_for('static', filename='script.js') }}">
+
+
+    </script>
   </body>
 </html>

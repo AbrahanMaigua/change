@@ -1,5 +1,5 @@
 
-{{% extends "base.html" %}}
+{% extends "base.html" %}
 {% block title %}Inicio{% endblock %}
 {% block content %}
 <body>
@@ -13,7 +13,6 @@
     <div>
         <p>Duración de carga:</p>
         <p>Precio:</p>
-        <p>Data:</p>
     </div>
     <div>
         <p>{{ time }}</p>
@@ -22,8 +21,9 @@
 </div>
 
 <div class="center">
-    <button onclick="pix({{ total }});">Pix</button>
-    <button>cartão de porta</button>
+    <button class="button" onclick="pix({{ total }});">Pix</button>
+    <a class="button plain-text" href="/carton" >cartão de porta</a>
+
 </div>
 
 {% endblock %}

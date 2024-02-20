@@ -1,1 +1,0 @@
-mob\Scripts\flask.exe --app read run

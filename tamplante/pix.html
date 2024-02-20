@@ -1,0 +1,18 @@
+
+{% extends "base.html" %}
+{% block title %}Pix{% endblock %}
+{% block content %}
+    <div class="container">
+        <div  class="counter">
+            <p id="display">00:05:00</p>
+
+        </div>
+        <img src="{{ img }}" class="qr" alt="">
+
+        <p>{{ total_pagar }} R$</p>
+
+    </div>
+    <script src="{{ url_for('static', filename='cro.js') }}">
+
+
+{% endblock %}

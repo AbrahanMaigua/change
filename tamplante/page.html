@@ -1,5 +1,5 @@
 
-{{% extends "base.html" %}}
+{% extends "base.html" %}
 {% block title %}Inicio{% endblock %}
 {% block head %}
   {{ super() }}
@@ -29,7 +29,7 @@
             <button class="button" onclick="incrementTime(5400)">+1 h 30 min</button>
             <button class="button" onclick="incrementTime(7200)">+2 h</button>
             <button class="button" onclick="incrementTime(7200)">+2 h</button>
-            <a id="sendLink" href="/btn" class="button plain-text">Personalizado</a>
+            <a  href="{{ url_for('button') }}" class="button plain-text">Personalizado</a>
         </div>
     </div>
 {% endblock %}

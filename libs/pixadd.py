@@ -1,12 +1,20 @@
 import requests
 import http.client
-
 import random
-import datetime
 import json
-import time
 
-def create_cob(AppID:str, valor:int, cometdv:str):
+def create_cob(AppID:str, valor:int, cometdv:str) -> tuple:
+    """
+    Crea una solicitud de cobro (charge) en el servicio OpenPix.
+
+    Args:
+        AppID (str): ID de la aplicación utilizado para la autorización.
+        valor (int): Valor del cobro.
+        cometdv (str): Comentario o descripción del cobro.
+
+    Returns:
+        tuple: Una tupla que contiene la respuesta de la solicitud HTTP y el ID de la transacción generada.
+    """
     headers = {
         'Authorization': AppID,
         'content-type': 'application/json',
@@ -24,12 +32,18 @@ def create_cob(AppID:str, valor:int, cometdv:str):
 
     response = requests.post('https://api.openpix.com.br/api/v1/charge', params=params, headers=headers, json=json_data)
     return response, idpix
-def get_cob(appid, idpix):
-    '''
-    charge ID or correlation ID. You will 
-    need URI encoding if your correlation ID has characters outside
-     the ASCII set or reserved characters (%, #, /).
-    '''
+
+def get_cob(appid:str, idpix:str) -> dict:
+    """
+    Obtiene detalles de un cobro específico mediante su ID de transacción.
+
+    Args:
+        appid (str): ID de la aplicación utilizado para la autorización.
+        idpix (str): ID de la transacción de cobro.
+
+    Returns:
+        dict: Un diccionario con los detalles del cobro.
+    """
     conn = http.client.HTTPSConnection("api.openpix.com.br")
     headers = { 'Authorization': appid }
     conn.request("GET", f"/api/v1/charge/{idpix}", headers=headers)
@@ -40,27 +54,18 @@ def get_cob(appid, idpix):
 
     return dict(json.loads((data.decode("utf-8"))))
 
-
-
-def get_list(appid:str, start:str, end:str, status:str):
-
-    ## date and time in ISO 8601 format
-    ## YYYY-MM-DDTHH:MM:SS.ssssssZ
-
+def get_list(appid:str, start:str, end:str, status:str) -> dict:
     """
-    start	
-        string <date-time> (Start Date)
-        Example: start=2020-01-01T00:00:00Z
+    Obtiene una lista de cobros dentro de un rango de fechas y estado específico.
 
-        Start date used in the query. Complies with RFC 3339.
-    end	
-        string <date-time> (End Date)
-        Example: end=2020-12-01T17:00:00Z
+    Args:
+        appid (str): ID de la aplicación utilizado para la autorización.
+        start (str): Fecha y hora de inicio del rango de búsqueda (en formato ISO 8601).
+        end (str): Fecha y hora de finalización del rango de búsqueda (en formato ISO 8601).
+        status (str): Estado del cobro (ACTIVE, COMPLETED, EXPIRED).
 
-        End date used in the query. Complies with RFC 3339.
-    status	
-        string
-        Enum: "ACTIVE" "COMPLETED" "EXPIRED" 
+    Returns:
+        dict: Un diccionario con los detalles de los cobros encontrados.
     """
     start = start.replace(':', '&')
     end   = end.replace(':', '&')
@@ -75,9 +80,16 @@ def get_list(appid:str, start:str, end:str, status:str):
 
     return dict(json.loads((data.decode("utf-8"))))
 
+def accountslist(appid:str) -> dict:
+    """
+    Obtiene una lista de cuentas asociadas a la aplicación.
 
-def accountslist(appid):
+    Args:
+        appid (str): ID de la aplicación utilizado para la autorización.
 
+    Returns:
+        dict: Un diccionario con los detalles de las cuentas encontradas.
+    """
     conn = http.client.HTTPSConnection("api.openpix.com.br")
     headers = { 'Authorization': appid }
     conn.request("GET", "/api/v1/account/", headers=headers)
@@ -88,8 +100,17 @@ def accountslist(appid):
 
     return dict(json.loads((data.decode("utf-8"))))
 
-def accounts(appid, accountId):
+def accounts(appid:str, accountId:str) -> dict:
+    """
+    Obtiene detalles de una cuenta específica mediante su ID.
 
+    Args:
+        appid (str): ID de la aplicación utilizado para la autorización.
+        accountId (str): ID de la cuenta.
+
+    Returns:
+        dict: Un diccionario con los detalles de la cuenta.
+    """
     conn = http.client.HTTPSConnection("api.openpix.com.br")
     headers = { 'Authorization': appid }
     conn.request("GET", f"/api/v1/account/{accountId}", headers=headers)
@@ -99,3 +120,4 @@ def accounts(appid, accountId):
     conn.close()
 
     return dict(json.loads((data.decode("utf-8"))))
+
