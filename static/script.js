@@ -5,6 +5,7 @@ const MAX_SECONDS = 86400; // 24 horas en segundos
 const counterElement = document.getElementById('counter');
 const sendLinkElement = document.getElementById('sendLink');
 
+console.log(counterElement)
 function incrementTime(secondsToAdd) {
     totalSeconds += secondsToAdd;
     if (totalSeconds > MAX_SECONDS) {
@@ -28,31 +29,34 @@ function updateSendLink() {
 }
 
 function updateCounter() {
-    const hours = Math.floor(totalSeconds / 3600);
+    const hours   = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
     counterElement.textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
 function sendcheking() {
-    let tiempoInicial = document.getElementById("counter").textContent;
+    const timeT =  document.getElementById("counter")
+    let tiempoInicial = timeT.textContent;
     let totalSeconds = obtenerSegundos(tiempoInicial);
 
     const hours   = pad(Math.floor(totalSeconds / 3600));
     const minutes = pad(Math.floor((totalSeconds % 3600) / 60));
     const seconds = pad(totalSeconds % 60);
-    window.location.href = `cheking?hours=${hours}&min=${minutes}&seg=${seconds}`
+    if (`${seconds}` != '00' || `${minutes}` != '00' || `${hours}` != '00' ) {
+        window.location.href = `cheking?hours=${hours}&min=${minutes}&seg=${seconds}`
+
+    } else {
+        timeT.classList.add('red');
+        console.log(timeT.className)
+
+    }
 }
 
 function pad(num) {
     return num.toString().padStart(2, '0');
 }
 
-// Obtener el tiempo inicial desde el HTML
-window.onload = function() {
-    let tiempoInicial = document.getElementById("counter").textContent;
-    contador = obtenerSegundos(tiempoInicial);
-};
 
 function toggleContador() {
     // Si el contador está corriendo, detenerlo
@@ -94,35 +98,41 @@ function formatearTiempo(segundos) {
     let horas = Math.floor(segundos / 3600);
     let minutos = Math.floor((segundos % 3600) / 60);
     let segundosRestantes = segundos % 60;
+
+   
     return `${pad(horas)}:${pad(minutos)}:${pad(segundosRestantes)}`;
 }
 
-let textoInicial = document.getElementById("counter").textContent;
-    let caracteres = textoInicial.split('');
-    let contador_t = caracteres.length -1;
-    function resetCounter(){
-        document.getElementById("counter").textContent ='00:00:00';
-        textoInicial = document.getElementById("counter").textContent;
-        caracteres = textoInicial.split('');
-        contador_t = caracteres.length -1;
+function resetCounter(){
+    document.getElementById("counter").textContent ='00:00:00';
+    textoInicial = document.getElementById("counter").textContent;
+    caracteres = textoInicial.split('');
+    contador_t = caracteres.length -1;
 
-    }
+}
+const timeT =  document.getElementById("counter")
+let textoInicial = timeT.textContent;
+let caracteres   = textoInicial.split('');
+let contador_t = caracteres.length -1;
 
-    function addNumber(num) {
-        console.log(num)
-
-        if (contador_t != -1 && caracteres[contador_t] != ':'  ) {
-            caracteres[contador_t] = num.toString();
-            contador_t--;
-        } else  {
-            contador_t--;
-            addNumber(num)
-        }
-        // Actualizamos solo los caracteres modificados en el texto mostrado
-        document.getElementById("counter").textContent = caracteres.join('');
-    }
-
+function addNumber(num) {
    
+
+    if (contador_t != -1 && caracteres[contador_t] != ':'  ) {
+        caracteres[contador_t] = num.toString();
+        contador_t--;
+    } else  {
+        contador_t--;
+        addNumber(num)
+    }
+    // Actualizamos solo los caracteres modificados en el texto mostrado
+    let Seg = obtenerSegundos(caracteres.join(''))
+    if (Seg > MAX_SECONDS) {
+        Seg = MAX_SECONDS;
+    }
+    timeT.textContent = formatearTiempo(Seg);
+    timeT.classList.remove('red')
+}
 
 function pix(total){
     window.location.href = `pix/${total}`

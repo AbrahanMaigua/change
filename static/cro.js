@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     var display = document.getElementById('display');
-    var tiempoInicial = 10; // 5 minutos en segundos
+    var tiempoInicial = 3540; // 5 minutos en segundos
 
     // Función para actualizar el cronómetro
     function actualizarCronometro() {

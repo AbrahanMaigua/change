@@ -11,17 +11,24 @@
     {% endblock %}
   </head>
   <body {% block onload %}{% endblock %}>
+    <nav>
+      {% if request.path  != '/' %}
+          
+        <div class="back plain-text">
+          <a href="/">
+            <span class="material-symbols-outlined">
+              arrow_back
+            </span>
+          </a>
+        </div>
+      {% endif %}    
+    </nav>
     <div id="content">
         {% block content %}
         {% endblock %}
     </div>
 
-    <footer>
-      {% block footer %}
-      &copy; Copyright 2024 by mobility</a>.
-      {% endblock %}
-      
-    </footer>
+   
     <script src="{{ url_for('static', filename='script.js') }}">
 
 
