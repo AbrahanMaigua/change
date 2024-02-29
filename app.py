@@ -36,7 +36,7 @@ def show_post():
                           int(hora), int(minutos), int(segundos)),
                           total=total_pagar  )
    
-   return render_template('error.html', menssgen='error no puedes acesder esta pagina')
+   return render_template('error.html', num='1')
 @app.route('/btn')
 def button():
    return render_template('btn.html')
@@ -78,26 +78,18 @@ def timer():
 def index():
     return render_template('carton.html')
 
-@app.route('/stream')
-def stream():
-    def generate_data():
-        while True:
-            data = str(random.randint(0, 100))  # Genera datos aleatorios
-            yield 'data: {}\n\n'.format(data)
-            time.sleep(1)  # Espera 1 segundo antes de generar el próximo dato
-
-    return Response(generate_data(), mimetype='text/event-stream', headers={'Cache-Control': 'no-cache'})
-
 @app.route('/pixcheck/<idPix>')
 def pixcheck(idPix):
     def generate_data():
+        config = dotenv_values(".env")
+        appid  = config['APP_ID']
         while True:
-            config = dotenv_values(".env")
-            appid  = config['APP_ID']
-            
             ultima_trastion = get_cob(appid, idPix)
             status = ultima_trastion['charge']['status']  # Genera datos aleatorios
-            yield 'status: {}\n\n'.format(status)
-            time.sleep(1)  # Espera 1 segundo antes de generar el próximo dato
+
+            yield 'data: {}\n\n'.format(status)
+            time.sleep(2)  # Espera 1 segundo antes de generar el próximo dato
 
     return Response(generate_data(), mimetype='text/event-stream', headers={'Cache-Control': 'no-cache'})
+
+

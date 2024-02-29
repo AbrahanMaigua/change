@@ -71,18 +71,22 @@ function toggleContador() {
 }
 
 function actualizarContador() {
-    let tiempoFormateado = formatearTiempo(contador);
+    document.addEventListener("DOMContentLoaded", function() {
+        // Tu código JavaScript aquí
+        let tiempoFormateado = formatearTiempo(contador);
 
-    contador--; // Decrementar el contador
-    document.getElementById("counter").textContent = tiempoFormateado; // Actualizar el valor mostrado en el contador
+        contador--; // Decrementar el contador
+        document.getElementById("counter").textContent = tiempoFormateado; // Actualizar el valor mostrado en el contador
 
-    // Si el contador llega a cero, detenerlo
-    if (contador === 0) {
-        clearInterval(intervalo); // Detener el contador
-        window.location.href = '/'
-        
+        // Si el contador llega a cero, detenerlo
+        if (contador === 0) {
+            clearInterval(intervalo); // Detener el contador
+            window.location.href = '/'
+            
+        }
     }
-}
+});
+
 
 // Función para convertir el tiempo en formato HH:MM:SS a segundos
 function obtenerSegundos(tiempo) {

@@ -1,9 +1,20 @@
 
 {% extends "base.html" %}
-{% block title %}temporizador{% endblock %}
+{% block title %}Pix{% endblock %}
 {% block content %}
-<body>
+    <div class="container">
+        <div  class="counter top">
+            <p id="counter">00:59:00</p>
 
-<div class="top" id="counter">00:00:10</div>
-<button class="button top" onclick="toggleContador()">Iniciar/Detener</button>
+        </div>
+        <button class="button top" onclick="toggleContador()">Iniciar/Detener</button>
+
+
+    </div>
+
+
+   
+</body>
+
+
 {% endblock %}

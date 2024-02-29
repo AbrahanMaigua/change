@@ -14,31 +14,17 @@
     </div>
     <script src="{{ url_for('static', filename='cro.js') }}"></script>
 
+   
     <script>
-       const eventSource = new EventSource('/pixcheck/{{ID}}'); // Reemplaza {{ID}} con el valor correcto
-
-
-        eventSource.onopen = function(event) {
-            console.log('Conexión establecida con el servidor SSE');
-        };
-
-        
+        const eventSource = new EventSource('/pixcheck/{{ ID }}');
 
         eventSource.onmessage = function(event) {
-            console.log('Mensaje recibido del servidor SSE:', event.data);
-        
-        // Parsear el mensaje recibido, si es necesario
-        const data = JSON.parse(event.data);
-        
-        // Manejar el mensaje según su contenido
-        if (data.status === 'ACTU') {
-            console.log('El estado es COMPLET');
-            window.location.href = '/timer';
-        } else {
-            console.log('El estado no es COMPLET');
-            // Haz cualquier otra acción que necesites hacer
-        }
-    };
+            const newData = document.createElement('div');
+            newData.textContent = 'Server Time: ' + event.data;
+            if ( event.data === 'COMPLETED'){
+                window.location.href = '/timer'
+            }
+        };
     </script>
 </body>
 

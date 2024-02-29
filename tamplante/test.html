@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE Example</title>
+</head>
+<body>
+    <h1>SSE Example</h1>
+    <div id="sse-data"></div>
+
+    <script>
+        const eventSource = new EventSource('/events/{{idpix}}');
+        const sseDataElement = document.getElementById('sse-data');
+
+        eventSource.onmessage = function(event) {
+            const newData = document.createElement('div');
+            newData.textContent = 'Server Time: ' + event.data;
+            sseDataElement.appendChild(newData);
+            if ( event.data === 'COMPLETED'){
+                window.location.href = '/'
+            }
+        };
+    </script>
+</body>
+</html>
