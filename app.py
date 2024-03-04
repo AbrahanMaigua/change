@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request, Response, abort
 import os
+from os import path
 from libs.pixadd import create_cob, get_cob
 from dotenv import dotenv_values
 import random
 import time
-os.chdir(os.getcwd())
+
+print(os.chdir(os.getcwd()))
 
 app = Flask(__name__)
-app.template_folder = os.getcwd() + '\\ad\\tamplante' 
-app.static_folder   = os.getcwd() + '\\ad\\static'
+app.template_folder = os.getcwd() + r'/tamplante' 
+app.static_folder   = os.getcwd() + r'/static'
 @app.route('/')
 
 def home():
@@ -36,7 +38,7 @@ def show_post():
                           int(hora), int(minutos), int(segundos)),
                           total=total_pagar  )
    
-   return render_template('error.html', num='1')
+   abort(404)
 @app.route('/btn')
 def button():
    return render_template('btn.html')
@@ -44,30 +46,29 @@ def button():
 
 @app.route('/pix/<total>')
 def pix(total):
-   if total != '0.00':
-         
-      config = dotenv_values(".env")
-      appid = config['APP_ID']
-        
-      pix = create_cob(appid, total, cometdv='')
-      cob = get_cob(appid, pix[1])
-   
-      print(pix)
-      print(cob)
-      try:
-         img = cob['charge']['qrCodeImage']
 
-      except KeyError:
-         error = cob['error']
-         return  render_template('pix.html', e=error)
+   if total != '0.00':
+      if path.exists(".env"):   
+         config = dotenv_values(".env")
+         appid = config['APP_ID']
+         
+         pix = create_cob(appid, total, cometdv='')
+         cob = get_cob(appid, pix[1])
       
-      
-      
-      return render_template('pix.html', total_pagar='%.2f' % float(total), 
+         print(pix)
+         print(cob)
+         try:
+            img = cob['charge']['qrCodeImage']
+
+         except KeyError:
+            error = cob['error']
+            return  render_template('pix.html', e=error)
+         return render_template('pix.html', total_pagar='%.2f' % float(total), 
                               img=img,
-                              ID=cob['charge']['correlationID']
-)
-   return render_template('error.html', menssgen='error no puedes acesder esta pagina')
+                              ID=cob['charge']['correlationID'])
+      abort(500)      
+   abort(404)
+
 
 @app.route('/timer')
 def timer():
@@ -92,4 +93,28 @@ def pixcheck(idPix):
 
     return Response(generate_data(), mimetype='text/event-stream', headers={'Cache-Control': 'no-cache'})
 
+@app.errorhandler(404)
+def not_found(e):
+  return render_template('error.html', num='1'), 404
+  
+@app.errorhandler(500)
+def internal_server(e):
+  print(e)
+  return render_template('error.html', num='3'), 500
+
+@app.route('/pixdebug')
+def debug():
+   import json
+   if path.exists(".env"):
+         
+      config = dotenv_values(".env")
+      appid  = config['APP_ID']
+         
+      pix = create_cob(appid, '100', cometdv='test value')
+      cob = get_cob(appid, pix[1])
+
+      print(pix)
+      print(cob)
+      return json.dumps(cob)
+   abort(500)
 

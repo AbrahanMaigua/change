@@ -34,8 +34,8 @@
     pelo **APP_ID** pelo id do app que o open pix te dá
     `APP_ID='APP_ID'`
    
-9. gerar um código QR
-     `python logit.py`
+
+O sim o arquivo`.env` não existe e enviará um `error 500 internal server error` em todas as páginas que usam esse arquivo
 
 ## libnfc
 Install NFC tools:
@@ -49,6 +49,8 @@ Let libnfc know the device address of the reader in /etc/nfc/libnfc.conf:
 file /etc/nfc/libnfc.conf
 `device.name = "PN532 over I2C"`
 `device.connstring = "pn532_i2c:/dev/i2c-1"`
+
+
 
 #documentação
 * [logica de codigo](doc.md)

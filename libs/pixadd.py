@@ -3,7 +3,7 @@ import http.client
 import random
 import json
 
-def create_cob(AppID:str, valor:int, cometdv:str) -> tuple:
+def create_cob(AppID:str, valor:str, cometdv:str) -> tuple:
     """
     Crea una solicitud de cobro (charge) en el servicio OpenPix.
 
@@ -15,6 +15,7 @@ def create_cob(AppID:str, valor:int, cometdv:str) -> tuple:
     Returns:
         tuple: Una tupla que contiene la respuesta de la solicitud HTTP y el ID de la transacción generada.
     """
+    valor = valor + '00'
     headers = {
         'Authorization': AppID,
         'content-type': 'application/json',
@@ -26,7 +27,7 @@ def create_cob(AppID:str, valor:int, cometdv:str) -> tuple:
     idpix = str(random.randrange(0,1000))
     json_data = {
         'correlationID':idpix,
-        'value': valor,
+        'value': valor ,
         'comment':cometdv,
     }
 
