@@ -28,7 +28,8 @@ def show_post():
       segundos = 00 
 
    totalseg = hora * 3600 + minutos * 60 + segundos
-   total_pagar = totalseg / 15 # 60 seg valeria 4 reales
+   total_pagar = totalseg // 40 # 60 seg valeria 1,5 reales
+   print(total_pagar)
    total_pagar = '%.2f' % float(total_pagar) 
 
    if total_pagar != '0.00':

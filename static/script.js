@@ -5,6 +5,9 @@ const MAX_SECONDS = 86400; // 24 horas en segundos
 const counterElement = document.getElementById('counter');
 const sendLinkElement = document.getElementById('sendLink');
 
+
+
+console.log(counterElement)
 console.log(counterElement)
 function incrementTime(secondsToAdd) {
     totalSeconds += secondsToAdd;
@@ -70,22 +73,36 @@ function toggleContador() {
     intervalo = setInterval(actualizarContador, 1000);
 }
 
-function actualizarContador() {
-    document.addEventListener("DOMContentLoaded", function() {
-        // Tu código JavaScript aquí
-        let tiempoFormateado = formatearTiempo(contador);
+document.addEventListener("DOMContentLoaded", function() {
+    // Definir el contador y otras variables necesarias
+    let contador = 3600; // Por ejemplo, aquí deberías definir el valor inicial del contador
+    let intervalo;
+    var urlActual = window.location.href;
 
-        contador--; // Decrementar el contador
-        document.getElementById("counter").textContent = tiempoFormateado; // Actualizar el valor mostrado en el contador
-
-        // Si el contador llega a cero, detenerlo
-        if (contador === 0) {
-            clearInterval(intervalo); // Detener el contador
-            window.location.href = '/'
-            
+    // Mostrar la URL actual en la consola
+    if  (urlActual.split('/')[-1] === 'timer' ){
+        console.log("URL actual:", urlActual.split('/'));
+        // Función para actualizar el contador
+        function actualizarContador() {
+            let tiempoFormateado = formatearTiempo(contador);
+    
+            contador--; // Decrementar el contador
+            // document.getElementById("counter").textContent = tiempoFormateado; // Actualizar el valor mostrado en el contador
+    
+            // Si el contador llega a cero, detenerlo
+            if (contador === 0) {
+                clearInterval(intervalo); // Detener el contador
+                window.location.href = '/';
+            }
         }
+    
+        // Iniciar el intervalo para actualizar el contador cada segundo
+        intervalo = setInterval(actualizarContador, 1000);
+
     }
+   
 });
+
 
 
 // Función para convertir el tiempo en formato HH:MM:SS a segundos
@@ -114,10 +131,10 @@ function resetCounter(){
     contador_t = caracteres.length -1;
 
 }
-const timeT =  document.getElementById("counter")
+const timeT      =  document.getElementById("counter")
 let textoInicial = timeT.textContent;
 let caracteres   = textoInicial.split('');
-let contador_t = caracteres.length -1;
+let contador_t   = caracteres.length -1;
 
 function addNumber(num) {
    
