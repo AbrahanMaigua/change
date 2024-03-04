@@ -19,7 +19,6 @@ def home():
 @app.route('/cheking')
 def show_post():
    try:
-         
       hora     = int(request.args.get('hours'))
       minutos  = int(request.args.get('min'))
       segundos = int(request.args.get('seg'))
@@ -95,7 +94,7 @@ def pixcheck(idPix):
 
 @app.errorhandler(404)
 def not_found(e):
-  return render_template('error.html', num='1'), 404
+  return render_template('error.html', num='2'), 404
   
 @app.errorhandler(500)
 def internal_server(e):
