@@ -25,7 +25,7 @@ function resetTime() {
 }
 
 function updateSendLink() {
-    const hours = Math.floor(totalSeconds / 3600);
+    const hours   = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
     sendLinkElement.href = `cheking?hours=${hours}&min=${minutes}&seg=${seconds}`;
@@ -61,6 +61,24 @@ function pad(num) {
 }
 
 
+
+// Función para actualizar el contador
+function actualizarContador() {
+    let tiempoFormateado = formatearTiempo(contador);
+
+    contador--; // Decrementar el contador
+    // document.getElementById("counter").textContent = tiempoFormateado; // Actualizar el valor mostrado en el contador
+
+    // Si el contador llega a cero, detenerlo
+    if (contador === 0) {
+        clearInterval(intervalo); // Detener el contador
+        window.location.href = '/';
+    }
+    setInterval(contador, 1000);
+
+}
+
+
 function toggleContador() {
     // Si el contador está corriendo, detenerlo
     if (intervalo) {
@@ -72,36 +90,6 @@ function toggleContador() {
     // Si el contador está detenido, iniciarlo
     intervalo = setInterval(actualizarContador, 1000);
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Definir el contador y otras variables necesarias
-    let contador = 3600; // Por ejemplo, aquí deberías definir el valor inicial del contador
-    let intervalo;
-    var urlActual = window.location.href;
-
-    // Mostrar la URL actual en la consola
-    if  (urlActual.split('/')[-1] === 'timer' ){
-        console.log("URL actual:", urlActual.split('/'));
-        // Función para actualizar el contador
-        function actualizarContador() {
-            let tiempoFormateado = formatearTiempo(contador);
-    
-            contador--; // Decrementar el contador
-            // document.getElementById("counter").textContent = tiempoFormateado; // Actualizar el valor mostrado en el contador
-    
-            // Si el contador llega a cero, detenerlo
-            if (contador === 0) {
-                clearInterval(intervalo); // Detener el contador
-                window.location.href = '/';
-            }
-        }
-    
-        // Iniciar el intervalo para actualizar el contador cada segundo
-        intervalo = setInterval(actualizarContador, 1000);
-
-    }
-   
-});
 
 
 
@@ -160,3 +148,43 @@ function pix(total){
 
 }
 
+
+
+function actualizarCronometro() {
+    const counterElement = document.getElementById('counter');
+    let totalseg = obtenerSegundos(counterElement.textContent); // Obtener el contenido del elemento
+    let tiempoRestante = totalseg;
+
+    // Función para convertir el tiempo en formato HH:MM:SS a segundos
+    function obtenerSegundos(tiempo) {
+        let partesTiempo = tiempo.split(":");
+        let horas = parseInt(partesTiempo[0]);
+        let minutos = parseInt(partesTiempo[1]);
+        let segundos = parseInt(partesTiempo[2]);
+        return horas * 3600 + minutos * 60 + segundos;
+    }
+   
+
+    // Si el tiempo restante es 0, detener el cronómetro
+    if (tiempoRestante === 0) {
+        clearInterval(intervalo);
+        window.location.href = '/';
+
+
+    } else {
+        tiempoRestante--; // Decrementar el tiempo restante
+        counterElement.textContent = formatearTiempo(tiempoRestante); // Actualizar el valor mostrado en el contador
+
+    }
+}
+
+function iniciarCronometro() {
+    console.log("Cronómetro iniciado");
+    actualizarCronometro(); // Llamar a la función una vez para que comience inmediatamente
+    return setInterval(actualizarCronometro, 1000);
+}
+
+document.getElementById('startButton').addEventListener('click', function() {
+    // Cuando se hace clic en el botón, se inicia el cronómetro
+    var intervalo = iniciarCronometro();
+});
