@@ -2,8 +2,9 @@ from flask import Flask, render_template, request, Response, abort
 import os
 from os import path
 from libs.pixadd import create_cob, get_cob
+from libs.db import *
 from dotenv import dotenv_values
-import random
+from datetime import datetime
 import time
 
 print(os.chdir(os.getcwd()))
@@ -18,6 +19,9 @@ def home():
 
 @app.route('/cheking')
 def show_post():
+   date = datetime.now()
+
+   date_row = date.strftime('%m/%d/%Y %H:%M:%S')
    try:
       hora     = int(request.args.get('hours'))
       minutos  = int(request.args.get('min'))
@@ -27,16 +31,21 @@ def show_post():
       minutos  = 00
       segundos = 00 
 
+      
+   carga = "{:02d}:{:02d}:{:02d}".format(
+                          int(hora), int(minutos), int(segundos))
+
    totalseg = hora * 3600 + minutos * 60 + segundos
+   create_pedido(date_row, False, carga, totalseg)
+
    total_pagar = totalseg // 40 # 60 seg valeria 1,5 reales
    print(total_pagar)
    total_pagar = '%.2f' % float(total_pagar) 
 
    if total_pagar != '0.00':
       return render_template('cheking.html', 
-                          time="{:02d}:{:02d}:{:02d}".format(
-                          int(hora), int(minutos), int(segundos)),
-                          total=total_pagar  )
+                             time=carga,
+                             total=total_pagar  )
    
    abort(404)
 @app.route('/btn')
@@ -46,6 +55,7 @@ def button():
 
 @app.route('/pix/<total>')
 def pix(total):
+  
 
    if total != '0.00':
       if path.exists(".env"):   
@@ -54,7 +64,7 @@ def pix(total):
          
          pix = create_cob(appid, total, cometdv='')
          cob = get_cob(appid, pix[1])
-      
+
          print(pix)
          print(cob)
          try:
@@ -70,10 +80,12 @@ def pix(total):
    abort(404)
 
 
-@app.route('/timer')
-def timer():
-    # show the subpath after /path/
-    return render_template('timer.html')
+@app.route('/timer/<int:pedido_id>')
+def timer(pedido_id):
+      
+      info = view_pedido(pedido_id)
+      # show the subpath after /path/
+      return render_template('timer.html', Time=info[3])
 
 @app.route('/carton')
 def index():
