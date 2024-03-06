@@ -13,19 +13,22 @@ O código consiste em um arquivo Python que define a lógica da aplicação e um
 - tamlante/: Pasta contendo os templates HTML.
      - base.html: estrutura HTML básica.
      - page.html: modelo para a página principal.
-     -checking.html: modelo para exibir o resultado da verificação.
+     - checking.html: modelo para exibir o resultado da verificação.
+     - carton.html: modelo para pagina de relizamento de pagamento con carton nfc
+     - btn.html: modelo para exibir botone de numericos
      - pix.html: Modelo para página de pagamento PIX.
      - timer.html: modelo para a página do cronômetro.
+     - error.html: modelo para exibir errores 500 e 404 
 - static/ : Pasta contendo arquivos estáticos como CSS, JavaScript, imagens, etc.
 
 3. Recursos e rotas:
 -----------------------------
 - Caminho principal ('/'):
      - Método: GET
-     - Função: casa()
+     - Função: home()
      - Descrição: Renderiza o modelo 'page.html' para a página principal.
 
-- Caminho '/verificando?horas=00&min=00&sec=$00':
+- Caminho '/cheking?horas=00&min=00&sec=$00':
      - Método: GET
      - Função: show_post()
      - Descrição: Recebe os parâmetros da consulta (horas, minutos e segundos), realiza um cálculo com base nesses parâmetros e renderiza o template 'checking.html' para exibir o resultado.
@@ -33,12 +36,17 @@ O código consiste em um arquivo Python que define a lógica da aplicação e um
 - Caminho '/pix/<int:total>':
      - Método: GET
      - Função: pix (total)
-     - Descrição: Esta rota foi desenvolvida para processar pagamentos PIX. Atualmente, não está implementado no código fornecido.
+     - Descrição: Esta rota foi desenvolvida para processar pagamentos PIX.
 
-- Caminho '/temporizador':
+- Caminho '/timer/<int:pedido_id>':
      - Método: GET
-     - Função: temporizador()
-     - Descrição: Renderize o modelo 'timer.html' para exibir um cronômetro. No entanto, esta funcionalidade não está implementada no código fornecido.
+     - Função: temporizador(pedido_id)
+     - Descrição: Renderize o modelo 'timer.html' para exibir um cronômetro.
+
+- Caminho '/carton/':
+     - Método: GET
+     - Função: carton()
+     - Descrição: Renderize o modelo 'carton.html' para realizar un pagamento via carton nfc. por los momonto esta funcion no esta disponible para su uso 
 
 4. Variáveis ​​importantes:
 --------------------------
@@ -49,6 +57,6 @@ O código consiste em um arquivo Python que define a lógica da aplicação e um
 
 5. Manutenção futura:
 --------------------------
-- A implementação da função 'pix(total)' deve ser concluída para processar pagamentos PIX, se necessário.
+- adicionar soporte al al uso de cartones nfc
 - Mais rotas e recursos podem ser adicionados conforme necessário para expandir a funcionalidade do aplicativo.
 - Os modelos HTML podem ser melhorados para melhorar a experiência do usuário.

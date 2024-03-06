@@ -22,7 +22,7 @@
             const newData = document.createElement('div');
             newData.textContent = 'Server Time: ' + event.data;
             if ( event.data === 'COMPLETED'){
-                window.location.href = '/timer'
+                window.location.href = '/timer/{{ pedido_id }}'
             }
         };
     </script>

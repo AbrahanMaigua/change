@@ -143,8 +143,8 @@ function addNumber(num) {
     timeT.classList.remove('red')
 }
 
-function pix(total){
-    window.location.href = `pix/${total}`
+function pix(total, pedido_id){
+    window.location.href = `pix/${pedido_id}`
 
 }
 
@@ -181,7 +181,7 @@ function actualizarCronometro() {
 function iniciarCronometro() {
     console.log("Cronómetro iniciado");
     actualizarCronometro(); // Llamar a la función una vez para que comience inmediatamente
-    return setInterval(actualizarCronometro, 1000);
+    return setInterval(actualizarCronometro, 900);
 }
 
 document.getElementById('startButton').addEventListener('click', function() {
