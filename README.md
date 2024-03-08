@@ -50,10 +50,45 @@ file /etc/nfc/libnfc.conf
 `device.name = "PN532 over I2C"`
 `device.connstring = "pn532_i2c:/dev/i2c-1"`
 
+# run server and chomium start raspberry pi
 
+* server flask
 
-#documentação
+ `sudo nano /etc/systemd/system/server.service`
+
+```
+[Unit]
+Description=Your Flask App
+After=network.target
+
+[Service]
+User=kuro
+Group=www-data
+WorkingDirectory=/home/abrahan/change/
+Environment="/home/abrahan/change/mobility/bin"
+ExecStart=/home/abrahan/change/mobility/bin/gunicorn -w 4 -b 0.0.0.0:8000 app:app
+
+[Install]
+WantedBy=multi-user.target
+```
+
+* chromiun
+`nano /home/kuro/.config/autostart/autovlc.desktop`
+
+```
+[Desktop Entry]
+Type=Application
+Name=My Web App
+Exec=chromium-browser --kiosk
+Icon=chromium-browser
+Terminal=false
+
+```
+
+# recursos
 * [logica de codigo](doc.md)
 * [abrir pix](https://developers.openpix.com.br/)
 * [python virtual env](https://docs.python.org/3/library/venv.html)
 * [nfc seting](https://blog.stigok.com/2017/10/12/setting-up-a-pn532-nfc-module-on-a-raspberry-pi-using-i2c.html)
+
+* [guinicode](https://www.youtube.com/watch?v=KWIIPKbdxD0)
