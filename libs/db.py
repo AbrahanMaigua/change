@@ -1,20 +1,17 @@
+from flask import g
 import sqlite3
 from sqlite3 import Error
 from datetime import datetime
 
-def create_connection(db_file='db.sqlite3'):
-    """ create a database connection to the SQLite database
-        specified by db_file
-    :param db_file: database file
-    :return: Connection object or None
-    """
-    conn = None
-    try:
-        conn = sqlite3.connect(db_file)
-    except Error as e:
-        print(e)
+app = Flask(__name__)
 
-    return conn
+DATABASE = 'db.sqlite3'
+
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+    return db
 
 def create_pedido(date, status, fomatado, seg, valor):
     """ Create new pedido in database
