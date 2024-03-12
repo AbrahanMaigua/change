@@ -9,8 +9,8 @@ from time import sleep
 app = Flask(__name__)
 app.template_folder = getcwd() + r'/tamplante' 
 app.static_folder   = getcwd() + r'/static'
-@app.route('/')
 
+@app.route('/')
 def home():
    return render_template('page.html')
 
@@ -92,7 +92,8 @@ def pixcheck(idPix):
             ultima_trastion = get_cob(appid, idPix)
             status = ultima_trastion['charge']['status']  # Genera datos aleatorios
             if status != 'ACTIVE':
-               pay_paedido(idPix)
+               pass
+               #pay_paedido(idPix)
             yield 'data: {}\n\n'.format(status)
             sleep(2)  # Espera 1 segundo antes de generar el próximo dato
 

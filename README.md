@@ -37,6 +37,25 @@
 
 O sim o arquivo`.env` não existe e enviará um `error 500 internal server error` em todas as páginas que usam esse arquivo
 
+# database em producion
+ To use the apt repository, follow these steps:
+
+install posgreSql
+```
+# Create the file repository configuration:
+sudo sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+
+# Import the repository signing key:
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+# Update the package lists:
+sudo apt-get update
+
+# Install the latest version of PostgreSQL.
+# If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':
+sudo apt-get -y install postgresql
+```
+
 ## libnfc
 Install NFC tools:
 
@@ -92,3 +111,4 @@ Terminal=false
 * [nfc seting](https://blog.stigok.com/2017/10/12/setting-up-a-pn532-nfc-module-on-a-raspberry-pi-using-i2c.html)
 
 * [guinicode](https://www.youtube.com/watch?v=KWIIPKbdxD0)
+* [postgrestSQL]{https://www.postgresql.org/download/linux/ubuntu/}
