@@ -112,13 +112,13 @@ cur = conn.cursor()
 
 cur.execute('''
 CREATE TABLE IF NOT EXISTS pedido (
-    pedido_id           INTEGER PRIMARY KEY AUTOINCREMENT,
-    pix_id              INTERGER DEFAUL NULL,
-    create_at           DATE,  
-    status_pagamento    BOOL DEFAULT FALASE,
+    pedido_id           SERIAL PRIMARY KEY,
+    pix_id              INTEGER DEFAULT NULL,
+    created_at          DATE,
+    status_pagamento    BOOLEAN DEFAULT FALSE,
     tiempo_carga        TEXT,
     valor               FLOAT,
-    segundo_total       INTEGER          
+    segundo_total       INTEGER
 ); ''')
 
 
