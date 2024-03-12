@@ -2,15 +2,13 @@ from flask import g
 import sqlite3
 from sqlite3 import Error
 from datetime import datetime
-from config import load_config 
+from .config import load_config 
 import psycopg2
 
 
 def create_connection():
     config = load_config()
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = psycopg2.connect(**config)
+    db = g._database = psycopg2.connect(**config)
     return db
 
 def create_pedido(date, status, fomatado, seg, valor):
