@@ -54,7 +54,32 @@ sudo apt-get update
 # Install the latest version of PostgreSQL.
 # If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':
 sudo apt-get -y install postgresql
+sudo apt-get install libpq-dev
+
 ```
+edit password user postgres
+
+```
+sudo -u postgres psql
+
+\pasworrd
+\q
+
+psql -U postgres -h localhost
+
+CREATE DATABASE cargador;
+```
+
+create file *database.ini*
+
+```
+[postgresql]
+host=localhost
+database=cargador
+user=postgres
+password=YourPassword
+```
+
 
 ## libnfc
 Install NFC tools:
