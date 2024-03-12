@@ -8,7 +8,7 @@ import psycopg2
 
 def create_connection():
     config = load_config()
-    db = g._database = psycopg2.connect(**config)
+    db = psycopg2.connect(**config)
     return db
 
 def create_pedido(date, status, fomatado, seg, valor):
