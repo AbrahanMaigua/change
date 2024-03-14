@@ -116,6 +116,12 @@ ExecStart=/home/abrahan/change/mobility/bin/gunicorn -w 4 -b 0.0.0.0:8000 app:ap
 WantedBy=multi-user.target
 ```
 
+```
+sudo systemctl daemon-reload
+sudo systemctl start server.service
+```
+
+
 * chromiun
 `nano /home/kuro/.config/autostart/autovlc.desktop`
 
