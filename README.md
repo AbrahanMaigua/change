@@ -123,7 +123,7 @@ WantedBy=multi-user.target
 [Desktop Entry]
 Type=Application
 Name=My Web App
-Exec=chromium-browser --kiosk
+Exec=chromium-browser localhost:8000 --kiosk
 Icon=chromium-browser
 Terminal=false
 
