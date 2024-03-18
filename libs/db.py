@@ -23,16 +23,14 @@ def create_table_pedido()
     ); ''')
 def execute(sql, values=None):
     try:
-            
         conn = create_connection()
         cur = conn.cursor()
         cur.execute(sql, values)
         conn.commit()
-
     except  psycopg2.errors.UndefinedTable as e:
 
         print(e)
-        create_table_pedido
+        create_table_pedido()
        
 
 
