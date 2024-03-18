@@ -10,6 +10,34 @@ def create_connection():
     config = load_config()
     db = psycopg2.connect(**config)
     return db
+def create_table_pedido()
+     execute('''
+        CREATE TABLE IF NOT EXISTS pedido (
+            pedido_id           SERIAL PRIMARY KEY,
+            pix_id              INTEGER DEFAULT NULL,
+            created_at          TIMESTAMP ,
+            status_pagamento    BOOLEAN DEFAULT FALSE,
+            tiempo_carga        TEXT,
+            valor               FLOAT,
+            segundo_total       INTEGER
+    ); ''')
+def execute(sql, values=None):
+    try:
+            
+        conn = create_connection()
+        cur = conn.cursor()
+        cur.execute(sql, values)
+        conn.commit()
+
+    except  psycopg2.errors.UndefinedTable as e:
+
+        print(e)
+        create_table_pedido
+       
+
+
+    return cur.fetchall()[0]
+
 
 def create_pedido(date, fomatado, seg, valor):
     """ Create new pedido in database
@@ -102,21 +130,6 @@ def ultimo_registro():
     cur.execute(sql)
 
     return cur.fetchall()[0][0]
-
-conn = create_connection()
-cur = conn.cursor()
-
-cur.execute('''
-CREATE TABLE IF NOT EXISTS pedido (
-    pedido_id           SERIAL PRIMARY KEY,
-    pix_id              INTEGER DEFAULT NULL,
-    created_at          TIMESTAMP ,
-    status_pagamento    BOOLEAN DEFAULT FALSE,
-    tiempo_carga        TEXT,
-    valor               FLOAT,
-    segundo_total       INTEGER
-); ''')
-
 
 
 """
