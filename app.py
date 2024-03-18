@@ -23,7 +23,7 @@ def button():
 @app.route('/cheking')
 def show_post():
    date = datetime.now()
-   date_row = date.strftime('%m/%d/%Y %H:%M:%S')
+   date_row = date.strftime('%d/%m/%Y %H:%M:%S')
    try:
       hora     = int(request.args.get('hours'))
       minutos  = int(request.args.get('min'))
