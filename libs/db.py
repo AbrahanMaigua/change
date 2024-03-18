@@ -25,7 +25,7 @@ def create_pedido(date, fomatado, seg, valor):
 
     sql = '''
     INSERT INTO pedido(created_at, tiempo_carga, valor, segundo_total)
-      VALUES (%s, %s, %s, %s)
+      VALUES (%s, %s, %s, %s)  SET datestyle = mdy;
         
     '''
     conn = create_connection()
