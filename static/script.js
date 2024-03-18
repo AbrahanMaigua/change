@@ -1,5 +1,7 @@
 let intervalo;
 let contador;
+let isactivecronometro = false;
+
 let totalSeconds = 0;
 const MAX_SECONDS = 86400; // 24 horas en segundos
 const counterElement = document.getElementById('counter');
@@ -186,5 +188,11 @@ function iniciarCronometro() {
 
 document.getElementById('startButton').addEventListener('click', function() {
     // Cuando se hace clic en el botón, se inicia el cronómetro
-    var intervalo = iniciarCronometro();
+    if (isactivecronometro === false){
+        isactivecronometro = true
+        document.getElementById('startButton').remove()
+        var intervalo = iniciarCronometro();
+
+
+    }
 });
