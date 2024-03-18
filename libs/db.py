@@ -110,7 +110,7 @@ cur.execute('''
 CREATE TABLE IF NOT EXISTS pedido (
     pedido_id           SERIAL PRIMARY KEY,
     pix_id              INTEGER DEFAULT NULL,
-    created_at          DATE,
+    created_at          TIMESTAMP ,
     status_pagamento    BOOLEAN DEFAULT FALSE,
     tiempo_carga        TEXT,
     valor               FLOAT,
