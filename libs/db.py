@@ -54,7 +54,7 @@ def create_pedido(date, fomatado, seg, valor):
       VALUES (TO_DATE(%s, 'MM/DD/YYYY'), %s, %s, %s);
         
     '''
-    execute(sql)
+    execute(sql, values=(date, fomatado, seg, valor))
 
 def add_pix_id(pedido_id ,pix_id):
     """ add pix_id ref in pix 
