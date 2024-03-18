@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, Response, abort
-from os import path, getcwd
+from os import path, getcwd, chdir
 from libs.pixadd import create_cob, get_cob
 from libs.db import *
 from dotenv import dotenv_values
@@ -7,6 +7,8 @@ from datetime import datetime
 from time import sleep
 
 app = Flask(__name__)
+
+chdir(r'home/abrahan/change')
 app.template_folder = getcwd() + r'/tamplante' 
 app.static_folder   = getcwd() + r'/static'
 
