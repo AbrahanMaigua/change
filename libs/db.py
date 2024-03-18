@@ -10,7 +10,7 @@ def create_connection():
     config = load_config()
     db = psycopg2.connect(**config)
     return db
-def create_table_pedido()
+def create_table_pedido():
      execute('''
         CREATE TABLE IF NOT EXISTS pedido (
             pedido_id           SERIAL PRIMARY KEY,
