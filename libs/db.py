@@ -11,7 +11,7 @@ def create_connection():
     db = psycopg2.connect(**config)
     return db
 
-def create_pedido(date, status, fomatado, seg, valor):
+def create_pedido(date, status, fomatado, seg, valor, pix_id = None):
     """ Create new pedido in database
 
     :param
@@ -23,13 +23,14 @@ def create_pedido(date, status, fomatado, seg, valor):
 
     """
     sql = '''
-    INSERT INTO pedido(create_at, status_pagamento, tiempo_carga, valor, segundo_total)
-      VALUES (?,?,?,?,?)
+    INSERT INTO pedido(pix_id, created_at, status_pagamento,
+                       tiempo_carga, valor, segundo_total)
+      VALUES (?,?,?,?,?,?)
         
     '''
     conn = create_connection()
     cur = conn.cursor()
-    cur.execute(sql, (date, status, fomatado,  valor,seg))
+    cur.execute(sql, (pix_id,date, status, fomatado,  valor,seg))
     conn.commit()
     
 
@@ -51,8 +52,6 @@ def add_pix_id(pedido_id ,pix_id):
     conn.commit()
     
 
-
-
 def pay_paedido(idPix):
     """ Update pedido in True status
 
@@ -71,7 +70,6 @@ def pay_paedido(idPix):
     conn.commit()
     
 
-
 def view_pedido(pedido_id):
     """ query pedido by id  
     :param
@@ -86,7 +84,6 @@ def view_pedido(pedido_id):
     cur.execute(sql)
 
     return cur.fetchall()[0]
-
 
 def view_all():
 
@@ -105,7 +102,6 @@ def ultimo_registro():
     cur.execute(sql)
 
     return cur.fetchall()[0][0]
-
 
 conn = create_connection()
 cur = conn.cursor()
