@@ -40,7 +40,7 @@ def show_post():
    total_pagar = totalseg / 40 # 60 seg valeria 1,5 reales
    total_pagar = '%.2f' % float(total_pagar) 
    # save pedido
-   create_pedido(date_row, False, carga, totalseg, total_pagar)
+   create_pedido(date_row, carga, totalseg, total_pagar)
    pedido_id = ultimo_registro()
 
    if total_pagar != '0':

@@ -11,7 +11,7 @@ def create_connection():
     db = psycopg2.connect(**config)
     return db
 
-def create_pedido(date, status, fomatado, seg, valor, pix_id = None):
+def create_pedido(date, fomatado, seg, valor):
     """ Create new pedido in database
 
     :param
@@ -22,15 +22,15 @@ def create_pedido(date, status, fomatado, seg, valor, pix_id = None):
         seg::       total seconds
 
     """
+
     sql = '''
-    INSERT INTO pedido(pix_id, created_at, status_pagamento,
-                       tiempo_carga, valor, segundo_total)
-      VALUES (?,?,?,?,?,?)
+    INSERT INTO pedido(created_at, tiempo_carga, valor, segundo_total)
+      VALUES (%s, %s, %s, %s)
         
     '''
     conn = create_connection()
     cur = conn.cursor()
-    cur.execute(sql, (pix_id,date, status, fomatado,  valor,seg))
+    cur.execute(sql, (date, fomatado,  valor, seg))
     conn.commit()
     
 
