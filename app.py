@@ -8,7 +8,7 @@ from time import sleep
 
 app = Flask(__name__)
 
-chdir(r'home/abrahan/change')
+#chdir(r'home/abrahan/change')
 app.template_folder = getcwd() + r'/tamplante' 
 app.static_folder   = getcwd() + r'/static'
 

@@ -60,9 +60,13 @@ sudo apt-get install libpq-dev
 edit password user postgres
 
 ```
+sudo service postgresql start
+sudo su
+
 sudo -u postgres psql
 
-\pasworrd
+\password postgres  
+
 \q
 
 psql -U postgres -h localhost
@@ -70,7 +74,10 @@ psql -U postgres -h localhost
 CREATE DATABASE cargador;
 ```
 
-create file *database.ini*
+create file touch *database.ini*
+```
+touch *database.ini*
+```\
 
 ```
 [postgresql]

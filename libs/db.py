@@ -34,7 +34,7 @@ def execute(sql, values=None):
        
 
 
-    return cur.fetchall()[0]
+    #return cur.fetchall()[0]
 
 
 def create_pedido(date, fomatado, seg, valor):
@@ -45,13 +45,13 @@ def create_pedido(date, fomatado, seg, valor):
         status::    true pay not pay false
         formatado:: HH:MM:SS
         valor::     valor a pagar
-        seg::       total seconds
+        seg::       total secondss
 
     """
 
     sql = '''
-    INSERT INTO pedido(created_at, tiempo_carga, valor, segundo_total)
-      VALUES (TO_DATE(%s, 'MM/DD/YYYY'), %s, %s, %s);
+    INSERT INTO pedido(created_at, tiempo_carga, segundo_total, valor)
+      VALUES (TO_DATE(%s, 'DD/MM/YYYY'), %s, %s, %s);
         
     '''
     execute(sql, values=(date, fomatado, seg, valor))
