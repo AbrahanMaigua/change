@@ -24,7 +24,7 @@ def create_table_pedido():
 def execute(sql, values=None):
     try:
         conn = create_connection()
-        cur = conn.cursor()
+        cur  = conn.cursor()
         cur.execute(sql, values)
         conn.commit()
     except  psycopg2.errors.UndefinedTable as e:
@@ -54,11 +54,7 @@ def create_pedido(date, fomatado, seg, valor):
       VALUES (%s, %s, %s, %s);
         
     '''
-    conn = create_connection()
-    cur = conn.cursor()
-    cur.execute(sql, (date, fomatado,  valor, seg))
-    conn.commit()
-    
+    execute()
 
 def add_pix_id(pedido_id ,pix_id):
     """ add pix_id ref in pix 
