@@ -1,22 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streaming de datos en tiempo real</title>
-</head>
-<body>
-    <div id="dataContainer">
-        <!-- Aquí se mostrarán los datos en tiempo real -->
-    </div>
 
+{% extends "base.html" %}
+{% block title %}Pix{% endblock %}
+{% block content %}
+    <div class="container">
+        <div  class="counter">
+            <p id="display">00:59:00</p>
+
+        </div>
+        <img src="{{ url_for('static', filename='nfc.jpg' ) }}" class="qr" alt="">
+
+        <p>{{ total_pagar }} R$</p>
+
+    </div>
+    <script src="{{ url_for('static', filename='cro.js') }}"></script>
+
+   
     <script>
-        const eventSource = new EventSource('/stream'); // Conecta con el servidor SSE
+        const eventSource = new EventSource('/pixcheck/{{ ID }}');
 
         eventSource.onmessage = function(event) {
-            // Cuando se recibe un mensaje del servidor, actualiza el contenido
-            document.getElementById('dataContainer').innerText = event.data;
+            const newData = document.createElement('div');
+            newData.textContent = 'Server Time: ' + event.data;
+            if ( event.data === 'COMPLETED'){
+                window.location.href = '/timer/{{ pedido_id }}'
+            }
         };
     </script>
 </body>
-</html>
+
+
+{% endblock %}

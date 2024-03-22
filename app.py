@@ -103,7 +103,7 @@ def pixcheck(idPix):
 
 @app.route('/carton')
 def carton():
-    return render_template('carton.html')
+    return render_template('carton.html', img='nfc.jpg')
 
 @app.route('/timer/<int:pedido_id>')
 def timer(pedido_id):

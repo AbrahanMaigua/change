@@ -16,7 +16,7 @@
     `python -m venv mobility`
     * ativar o ambiente virtual
        * linux (bash/zsh)
-         ```mobility/bin/activate```
+         `source mobility/bin/activate`
        * windonsw (cmd)
            `mobility\Scripts\activate.bat`
    * instalar dependências
@@ -77,7 +77,7 @@ CREATE DATABASE cargador;
 create file touch *database.ini*
 ```
 touch *database.ini*
-```\
+```
 
 ```
 [postgresql]

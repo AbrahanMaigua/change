@@ -123,7 +123,7 @@ def ultimo_registro():
     cur = conn.cursor()
     cur.execute(sql)
 
-    return cur.fetchall()[0][0]
+    return cur.fetchall()
 
 
 """
