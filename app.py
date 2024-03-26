@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Response, abort
+from flask import Flask, render_template, request, Response, abort, redirect, url_for
 from os import path, getcwd, chdir
 from libs.pixadd import create_cob, get_cob
 from libs.db import *
@@ -8,22 +8,49 @@ from time import sleep
 
 app = Flask(__name__)
 
-#chdir(r'home/abrahan/change')
+#chdir('home/kuro/change')
 app.template_folder = getcwd() + r'/tamplante' 
 app.static_folder   = getcwd() + r'/static'
+print(app.static_folder ,
+      app.template_folder)
 
 @app.route('/')
 def home():
+   pedido_id = ultimo_registro()
+   if pedido_id != None:
+      registro = view_pedido(pedido_id) 
+      print(registro)
+      if registro[-4] == False and registro[-5] == True  :
+         return redirect(url_for('timer', 
+                                 pedido_id=registro[0],
+                                 startauto='true'))
+         
+
    return render_template('page.html')
 
 @app.route('/btn')
 def button():
    return render_template('btn.html')
 
+@app.route('/carton')
+def carton():
+    return render_template('carton.html', img='nfc.jpg')
+
+@app.route('/timer/<int:pedido_id>')
+def timer(pedido_id):
+      start = request.args.get('startauto')
+      print(start)
+      info = view_pedido(pedido_id)
+      print(info)
+      return render_template('timer.html', Time=info[-3])
+
+
 @app.route('/cheking')
 def show_post():
    date = datetime.now()
-   date_row = date.strftime('%d/%m/%Y %H:%M:%S')
+   # ['%d/%m/%Y,  %H:%M:%S']
+   date_row = date.strftime('%d/%m/%Y %H:%M:%S').split(' ')
+
    try:
       hora     = int(request.args.get('hours'))
       minutos  = int(request.args.get('min'))
@@ -40,7 +67,7 @@ def show_post():
    total_pagar = totalseg / 40 # 60 seg valeria 1,5 reales
    total_pagar = '%.2f' % float(total_pagar) 
    # save pedido
-   create_pedido(date_row, carga, totalseg, total_pagar)
+   create_pedido(date_row[0],date_row[1], carga, totalseg, total_pagar)
    pedido_id = ultimo_registro()
 
    if total_pagar != '0':
@@ -53,8 +80,9 @@ def show_post():
 
 @app.route('/pix/<pedido_id>')
 def pix(pedido_id):
-   print(pedido_id)
    pedido = view_pedido(pedido_id)
+   print(pedido)
+
    total  = str(pedido[-2]).replace(',', '')
    print(total)
 
@@ -85,6 +113,7 @@ def pix(pedido_id):
       abort(500)      
    abort(404)
 
+# server
 @app.route('/pixcheck/<idPix>')
 def pixcheck(idPix):
     def generate_data():
@@ -92,24 +121,51 @@ def pixcheck(idPix):
         appid  = config['APP_ID']
         while True:
             ultima_trastion = get_cob(appid, idPix)
-            status = ultima_trastion['charge']['status']  # Genera datos aleatorios
+            status = ultima_trastion['charge']['status']  
             if status != 'ACTIVE':
-               pass
-               #pay_paedido(idPix)
+               update_value('status_pagamento',True,'pedido_id = {idPix}')
             yield 'data: {}\n\n'.format(status)
-            sleep(2)  # Espera 1 segundo antes de generar el próximo dato
+            sleep(2)  # Espera 2 segundo antes de generar el próximo dato
 
     return Response(generate_data(), mimetype='text/event-stream', headers={'Cache-Control': 'no-cache'})
 
-@app.route('/carton')
-def carton():
-    return render_template('carton.html', img='nfc.jpg')
+@app.route('/complete')
+def completestatus():
+   def tiempo_a_segundos(tiempo):
+      horas, minutos, segundos = tiempo.split(':')
+      total_segundos = int(horas) * 3600 + int(minutos) * 60 + int(segundos)
+      return total_segundos
+   
+   def formatear_tiempo(segundos):
+      horas = segundos // 3600
+      minutos = (segundos % 3600) // 60
+      segundos_restantes = segundos % 60
+      return f"{pad(horas)}:{pad(minutos)}:{pad(segundos_restantes)}"
 
-@app.route('/timer/<int:pedido_id>')
-def timer(pedido_id):
-      info = view_pedido(pedido_id)
-      print(info)
-      return render_template('timer.html', Time=info[-3])
+   def pad(numero):
+      return str(numero).zfill(2)
+  
+   def generate_data():
+      
+      while True:
+            pedido_id = ultimo_registro()
+            registro = view_pedido(pedido_id) 
+
+            if registro[-3] == "00:00:00":
+               data = update_value('status_carga',True, "pedido_id = {pedido_id}")
+            else:
+               seg = tiempo_a_segundos(registro[-3])
+               timeformat = formatear_tiempo(seg - 60)
+
+               print(timeformat)
+               update_value('tiempo_carga', f"\'{timeformat}\'", f"pedido_id = {pedido_id}")
+            print(registro)
+            yield 'data: {}\n\n'.format(pedido_id)
+            sleep(60)
+
+   return Response(generate_data(), mimetype='text/event-stream', headers={'Cache-Control': 'no-cache'})
+
+
 
 @app.errorhandler(404)
 def not_found(e):

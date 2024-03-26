@@ -1,7 +1,4 @@
 from flask import g
-import sqlite3
-from sqlite3 import Error
-from datetime import datetime
 from .config import load_config 
 import psycopg2
 
@@ -10,17 +7,21 @@ def create_connection():
     config = load_config()
     db = psycopg2.connect(**config)
     return db
+
 def create_table_pedido():
      execute('''
         CREATE TABLE IF NOT EXISTS pedido (
             pedido_id           SERIAL PRIMARY KEY,
             pix_id              INTEGER DEFAULT NULL,
-            created_at          TIMESTAMP ,
+            created_date        TEXT ,
+            created_time        TEXT ,
             status_pagamento    BOOLEAN DEFAULT FALSE,
+            status_carga        BOOLEAN DEFAULT FALSE,
             tiempo_carga        TEXT,
             valor               FLOAT,
             segundo_total       INTEGER
     ); ''')
+     
 def execute(sql, values=None):
     try:
         conn = create_connection()
@@ -37,7 +38,7 @@ def execute(sql, values=None):
     #return cur.fetchall()[0]
 
 
-def create_pedido(date, fomatado, seg, valor):
+def create_pedido(date, time_c, fomatado, seg, valor):
     """ Create new pedido in database
 
     :param
@@ -50,11 +51,11 @@ def create_pedido(date, fomatado, seg, valor):
     """
 
     sql = '''
-    INSERT INTO pedido(created_at, tiempo_carga, segundo_total, valor)
-      VALUES (TO_DATE(%s, 'DD/MM/YYYY'), %s, %s, %s);
+    INSERT INTO pedido(created_date, created_time,  tiempo_carga, segundo_total, valor)
+      VALUES (%s, %s, %s, %s, %s);
         
     '''
-    execute(sql, values=(date, fomatado, seg, valor))
+    execute(sql, values=(date,time_c, fomatado, seg, valor))
 
 def add_pix_id(pedido_id ,pix_id):
     """ add pix_id ref in pix 
@@ -74,24 +75,42 @@ def add_pix_id(pedido_id ,pix_id):
     conn.commit()
     
 
-def pay_paedido(idPix):
+def update_value(column,value,where):
     """ Update pedido in True status
 
     :param
         pedido_id::: is identification pedido
+        column   ::: is column name updare
 
     """
     
     sql = f""" UPDATE pedido 
-               SET status_pagamento = TRUE
-               WHERE pix_id = {idPix}   
+               SET {column} = {value}
+               WHERE {where}; 
     """
+    print(sql)
     conn = create_connection()
     cur  = conn.cursor()
     cur.execute(sql)
     conn.commit()
-    
+    cur.close()
+    conn.close()
 
+
+
+def check_status():
+    """ query pedido by id  
+    :param
+        pedido_id::: is identification pedido
+
+
+    :return list[tuple]
+    """ 
+    regitro_id = ultimo_registro()
+   
+    return view_pedido(regitro_id)[2]
+    
+    
 def view_pedido(pedido_id):
     """ query pedido by id  
     :param
@@ -110,10 +129,14 @@ def view_pedido(pedido_id):
 def view_all():
 
     conn = create_connection()
-    cur = conn.cursor()
-    cur.execute(f'SELECT * FROM pedido')
+    cur  = conn.cursor()
+    row = cur.fetchone()
+    if row:
+        return row[0]
+    return None
 
-    return cur.fetchall()
+
+
 def ultimo_registro():
 
     sql = '''SELECT pedido_id FROM pedido 
@@ -122,9 +145,13 @@ def ultimo_registro():
     conn = create_connection()
     cur = conn.cursor()
     cur.execute(sql)
+    row = cur.fetchone()
+    if row:
+        return row[0]
+    return None
 
-    return cur.fetchall()
 
+create_table_pedido()
 
 """
 example use
