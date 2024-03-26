@@ -39,7 +39,8 @@ echo "virtual environment..."
 if  [ -d "env/" ] && [ -d "pn532/" ]; then
     echo "reddy"
 else
-    python3 -m venv env
+    sudo apt install python3.10-venv
+    sudo python3 -m venv env
     source env/bin/activate
     pip install -r requirements.txt
     git clone https://github.com/hoanhan101/pn532.git 

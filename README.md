@@ -76,7 +76,7 @@ CREATE DATABASE cargador;
 
 create file touch *database.ini*
 ```
-touch *database.ini*
+touch database.ini
 ```
 
 ```
