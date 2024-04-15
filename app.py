@@ -75,7 +75,7 @@ def show_post():
       return render_template('cheking.html', 
                              time=carga,
                              total=total_pagar,
-                             pedido_id=pedido_id )
+                             pedido_id=pedido_id[0][0] )
    
    abort(404)
 
@@ -171,6 +171,8 @@ def completestatus():
 
 # section error
 
+  
+# error 
 @app.errorhandler(404)
 def not_found(e):
   print(e)

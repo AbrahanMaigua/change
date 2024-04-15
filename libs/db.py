@@ -140,7 +140,8 @@ def view_all():
 def ultimo_registro():
 
     sql = '''SELECT pedido_id FROM pedido 
-    WHERE pedido_id = (SELECT MAX(pedido_id)  FROM pedido);'''
+             WHERE  pedido_id = (SELECT MAX(pedido_id)
+             FROM   pedido);'''
 
     conn = create_connection()
     cur = conn.cursor()
