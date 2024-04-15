@@ -8,7 +8,7 @@
 
 {% block content %}
     <div class="container">
-        <img src="https://i.pinimg.com/564x/3c/4b/40/3c4b40a7b3f74a59df7dbaafa3e4e8b4.jpg" alt="Imagen" class="image">
+        <img src="{{ url_for('static', filename='logo/logo-1.jpg') }}" alt="Imagen" class="image">
         <div class="counter">
             
             <button style="all: initial;cursor: pointer; "  onclick="resetTime()"> 
