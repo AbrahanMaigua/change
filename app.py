@@ -5,6 +5,7 @@ from libs.db import *
 from dotenv import dotenv_values
 from datetime import datetime
 from time import sleep
+from libs.relay.acrive import *
 
 app = Flask(__name__)
 
@@ -113,7 +114,7 @@ def pix(pedido_id):
       abort(500)      
    abort(404)
 
-# server
+# server APi
 @app.route('/pixcheck/<idPix>')
 def pixcheck(idPix):
     def generate_data():
@@ -153,9 +154,11 @@ def completestatus():
 
             if registro[-3] == "00:00:00":
                data = update_value('status_carga',True, "pedido_id = {pedido_id}")
+               control_relay().stop()
             else:
                seg = tiempo_a_segundos(registro[-3])
                timeformat = formatear_tiempo(seg - 60)
+               control_relay().start()
 
                print(timeformat)
                update_value('tiempo_carga', f"\'{timeformat}\'", f"pedido_id = {pedido_id}")
@@ -166,6 +169,7 @@ def completestatus():
    return Response(generate_data(), mimetype='text/event-stream', headers={'Cache-Control': 'no-cache'})
 
 
+# section error
 
 @app.errorhandler(404)
 def not_found(e):
