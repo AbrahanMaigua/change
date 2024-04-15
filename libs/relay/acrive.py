@@ -1,20 +1,34 @@
-import RPi.GPIO as GPIO
+
+try:
+    import RPi.GPIO as GPIO
+    class control_relay():
+        def __init__(self) -> None:
+            self.relay_ch = 21
+            
+        def start(self):
+
+            GPIO.setwarnings(False)
+            GPIO.setmode(GPIO.BCM)
+
+            GPIO.setup(self.relay_ch, GPIO.OUT)
+            GPIO.output(self.relay_ch, GPIO.LOW)
+
+        def stop(self):
+
+            GPIO.output(self.relay_ch, GPIO.HIGH)
+            GPIO.cleanup()
 
 
-class control_relay():
-    def __init__(self) -> None:
-        self.relay_ch = 21
-        
-    def start(self):
+except ModuleNotFoundError as error:
+    
 
-        GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BCM)
+    class control_relay():
 
-        GPIO.setup(self.relay_ch, GPIO.OUT)
-        GPIO.output(self.relay_ch, GPIO.LOW)
+        def __init__(self) -> None:
+            self.relay_ch = 21
+            
+        def start(self):
+           pass
 
-    def stop(self):
-
-        GPIO.output(self.relay_ch, GPIO.HIGH)
-        GPIO.cleanup()
-
+        def stop(self):
+            pass
