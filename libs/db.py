@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 from flask import g
+=======
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+>>>>>>> 527fb03 (alter db)
 from .config import load_config 
 import psycopg2
 
@@ -13,8 +19,13 @@ def create_table_pedido():
         CREATE TABLE IF NOT EXISTS pedido (
             pedido_id           SERIAL PRIMARY KEY,
             pix_id              INTEGER DEFAULT NULL,
+<<<<<<< HEAD
             created_date        TEXT ,
             created_time        TEXT ,
+=======
+            created_at          VARCHAR,
+            time_create         VARCHAR,
+>>>>>>> 527fb03 (alter db)
             status_pagamento    BOOLEAN DEFAULT FALSE,
             status_carga        BOOLEAN DEFAULT FALSE,
             tiempo_carga        TEXT,
@@ -38,7 +49,11 @@ def execute(sql, values=None):
     #return cur.fetchall()[0]
 
 
+<<<<<<< HEAD
 def create_pedido(date, time_c, fomatado, seg, valor):
+=======
+def create_pedido(date,time_row, fomatado, seg, valor):
+>>>>>>> 527fb03 (alter db)
     """ Create new pedido in database
 
     :param
@@ -51,11 +66,19 @@ def create_pedido(date, time_c, fomatado, seg, valor):
     """
 
     sql = '''
+<<<<<<< HEAD
     INSERT INTO pedido(created_date, created_time,  tiempo_carga, segundo_total, valor)
       VALUES (%s, %s, %s, %s, %s);
         
     '''
     execute(sql, values=(date,time_c, fomatado, seg, valor))
+=======
+    INSERT INTO pedido(created_at, time_create, tiempo_carga, segundo_total, valor)
+      VALUES (%s, %s, %s, %s, %s);
+        
+    '''
+    execute(sql, values=(date,time_row, fomatado, seg, valor))
+>>>>>>> 527fb03 (alter db)
 
 def add_pix_id(pedido_id ,pix_id):
     """ add pix_id ref in pix 
@@ -75,26 +98,56 @@ def add_pix_id(pedido_id ,pix_id):
     conn.commit()
     
 
+<<<<<<< HEAD
 def update_value(column,value,where):
     """ Update pedido in True status
 
     :param
         pedido_id::: is identification pedido
         column   ::: is column name updare
+=======
+def update_status(colunm,idPix):
+    """ Update pedido in True status
+
+    :param
+        pedido_id ::: is identification pedido
+        colunm    ::: is update status 
+>>>>>>> 527fb03 (alter db)
 
     """
     
     sql = f""" UPDATE pedido 
+<<<<<<< HEAD
                SET {column} = {value}
                WHERE {where}; 
+=======
+               SET {colunm} = TRUE
+               WHERE pix_id = {idPix}   
+>>>>>>> 527fb03 (alter db)
     """
     print(sql)
     conn = create_connection()
     cur  = conn.cursor()
     cur.execute(sql)
     conn.commit()
+<<<<<<< HEAD
     cur.close()
     conn.close()
+=======
+
+def view_status(colunm):
+
+    sql = f'''SELECT {colunm} FROM pedido 
+             WHERE  pedido_id = (SELECT MAX(pedido_id)
+             FROM   pedido);'''
+
+    conn = create_connection()
+    cur = conn.cursor()
+    cur.execute(sql)
+
+    return cur.fetchall()
+    
+>>>>>>> 527fb03 (alter db)
 
 
 
@@ -137,10 +190,16 @@ def view_all():
 
 
 
+<<<<<<< HEAD
+=======
+    return cur.fetchall()
+
+>>>>>>> 527fb03 (alter db)
 def ultimo_registro():
 
     sql = '''SELECT pedido_id FROM pedido 
-    WHERE pedido_id = (SELECT MAX(pedido_id)  FROM pedido);'''
+             WHERE  pedido_id = (SELECT MAX(pedido_id)
+             FROM   pedido);'''
 
     conn = create_connection()
     cur = conn.cursor()

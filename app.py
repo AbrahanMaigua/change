@@ -17,6 +17,7 @@ print(app.static_folder ,
 
 @app.route('/')
 def home():
+<<<<<<< HEAD
    pedido_id = ultimo_registro()
    if pedido_id != None:
       registro = view_pedido(pedido_id) 
@@ -26,6 +27,13 @@ def home():
                                  pedido_id=registro[0],
                                  startauto='true'))
          
+=======
+   if view_status('status_carga')[0][0] == False:
+      pedido_id = ultimo_registro()[0][0]
+      return redirect(url_for(f'timer_count',
+                              pedido_id=pedido_id,
+                              startauto="true"))
+>>>>>>> 527fb03 (alter db)
 
    return render_template('page.html')
 
@@ -49,9 +57,15 @@ def timer(pedido_id):
 @app.route('/cheking')
 def show_post():
    date = datetime.now()
+<<<<<<< HEAD
    # ['%d/%m/%Y,  %H:%M:%S']
    date_row = date.strftime('%d/%m/%Y %H:%M:%S').split(' ')
 
+=======
+   date_row = date.strftime('%d/%m/%Y')
+   time_row = date.strftime(r'%H:%M:%S')
+   print(date)
+>>>>>>> 527fb03 (alter db)
    try:
       hora     = int(request.args.get('hours'))
       minutos  = int(request.args.get('min'))
@@ -68,19 +82,28 @@ def show_post():
    total_pagar = totalseg / 40 # 60 seg valeria 1,5 reales
    total_pagar = '%.2f' % float(total_pagar) 
    # save pedido
+<<<<<<< HEAD
    create_pedido(date_row[0],date_row[1], carga, totalseg, total_pagar)
+=======
+   create_pedido(date_row, time_row, carga, totalseg, total_pagar)
+>>>>>>> 527fb03 (alter db)
    pedido_id = ultimo_registro()
 
    if total_pagar != '0':
       return render_template('cheking.html', 
                              time=carga,
                              total=total_pagar,
-                             pedido_id=pedido_id )
+                             pedido_id=pedido_id[0][0] )
    
    abort(404)
 
 @app.route('/pix/<pedido_id>')
 def pix(pedido_id):
+<<<<<<< HEAD
+=======
+   print(pedido_id)
+   
+>>>>>>> 527fb03 (alter db)
    pedido = view_pedido(pedido_id)
    print(pedido)
 
@@ -114,7 +137,24 @@ def pix(pedido_id):
       abort(500)      
    abort(404)
 
+<<<<<<< HEAD
 # server APi
+=======
+
+@app.route('/carton')
+def carton():
+    return render_template('carton.html', img='nfc.jpg')
+
+@app.route('/timer/<int:pedido_id>')
+def timer_count(pedido_id):
+      info  = view_pedido(pedido_id)
+      start = request.args.get('startauto',type=str, default=False)
+
+      print(info)
+      return render_template('timer.html', Time=info[-3], startauto=start)
+
+# server cheking
+>>>>>>> 527fb03 (alter db)
 @app.route('/pixcheck/<idPix>')
 def pixcheck(idPix):
     def generate_data():
@@ -124,12 +164,17 @@ def pixcheck(idPix):
             ultima_trastion = get_cob(appid, idPix)
             status = ultima_trastion['charge']['status']  
             if status != 'ACTIVE':
+<<<<<<< HEAD
                update_value('status_pagamento',True,'pedido_id = {idPix}')
+=======
+               update_status('status_pagamento',idPix)
+>>>>>>> 527fb03 (alter db)
             yield 'data: {}\n\n'.format(status)
             sleep(2)  # Espera 2 segundo antes de generar el próximo dato
 
     return Response(generate_data(), mimetype='text/event-stream', headers={'Cache-Control': 'no-cache'})
 
+<<<<<<< HEAD
 @app.route('/complete')
 def completestatus():
    def tiempo_a_segundos(tiempo):
@@ -170,7 +215,25 @@ def completestatus():
 
 
 # section error
+=======
 
+@app.route('/carga_status')
+def power_off():
+    
+    def generate_data():
+   
+      trastion_id = ultimo_registro()[0][0]
+      update_status('status_carga',trastion_id)
+      status = trastion_id
+      #print(ultima_trastion)
+>>>>>>> 527fb03 (alter db)
+
+      yield 'data: {}\n\n'.format(status)
+     
+
+    return Response(generate_data(), mimetype='text/event-stream', headers={'Cache-Control': 'no-cache'})
+
+# error 
 @app.errorhandler(404)
 def not_found(e):
   print(e)
