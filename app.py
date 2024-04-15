@@ -9,7 +9,7 @@ from libs.relay.acrive import *
 
 app = Flask(__name__)
 
-#chdir('home/kuro/change')
+chdir('home/abrahan/change')
 app.template_folder = getcwd() + r'/tamplante' 
 app.static_folder   = getcwd() + r'/static'
 print(app.static_folder ,

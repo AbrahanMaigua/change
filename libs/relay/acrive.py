@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
-
+import os
+os.getcwd()
 
 class control_relay():
     def __init__(self) -> None:
