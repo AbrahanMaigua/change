@@ -17,6 +17,7 @@ print(app.static_folder ,
 
 @app.route('/')
 def home():
+
    pedido_id = ultimo_registro()
    if pedido_id != None:
       registro = view_pedido(pedido_id) 
@@ -75,6 +76,7 @@ def show_post():
       return render_template('cheking.html', 
                              time=carga,
                              total=total_pagar,
+                             pedido_id=pedido_id )
                              pedido_id=pedido_id[0] )
    
    abort(404)
@@ -99,13 +101,15 @@ def pix(pedido_id):
          print(pix)
          cob = get_cob(appid, pix[1])
          print(cob)
+	
       
 
          try:
             img = cob['charge']['qrCodeImage']
 
          except KeyError:
-            error = cob['error']
+            error = cob
+            print(error)
             return  render_template('pix.html', e=error)
          return render_template('pix.html', total_pagar='%.2f' % float(total), 
                               img=img,
@@ -124,7 +128,7 @@ def pixcheck(idPix):
             ultima_trastion = get_cob(appid, idPix)
             status = ultima_trastion['charge']['status']  
             if status != 'ACTIVE':
-               update_value('status_pagamento',True,'pedido_id = {idPix}')
+               update_value('status_pagamento',True,f'pedido_id = {idPix}')
             yield 'data: {}\n\n'.format(status)
             sleep(2)  # Espera 2 segundo antes de generar el próximo dato
 
@@ -158,7 +162,7 @@ def completestatus():
             else:
                seg = tiempo_a_segundos(registro[-3])
                timeformat = formatear_tiempo(seg - 60)
-               control_relay().start()
+               control_relay().stop()
 
                print(timeformat)
                update_value('tiempo_carga', f"\'{timeformat}\'", f"pedido_id = {pedido_id}")

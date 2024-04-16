@@ -1,4 +1,1 @@
-ALTER TABLE pedido add  COLUMN  time_create  TYPE VARCHAR(30);
-ALTER TABLE pedido ALTER COLUMN  time_create  TYPE VARCHAR(30);
-
-ALTER TABLE pedido ALTER COLUMN  created_at  TYPE VARCHAR(30);
+psq
