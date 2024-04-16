@@ -41,6 +41,7 @@ echo "virtual environment..."
 if  [ -d "env/" ] && [ -d "pn532/" ]; then
     echo "reddy"
 else
+    sudo apt install python3-pip -y
     sudo apt install python3.10-venv
     sudo pip3 install virtualenv 
     sudo virtualenv  --system-site-packages env

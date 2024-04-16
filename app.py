@@ -9,7 +9,7 @@ from libs.relay.acrive import *
 
 app = Flask(__name__)
 
-chdir('home/abrahan/change')
+#chdir('/home/abrahan/change')
 app.template_folder = getcwd() + r'/tamplante' 
 app.static_folder   = getcwd() + r'/static'
 print(app.static_folder ,
@@ -69,13 +69,14 @@ def show_post():
    total_pagar = '%.2f' % float(total_pagar) 
    # save pedido
    create_pedido(date_row[0],date_row[1], carga, totalseg, total_pagar)
-   pedido_id = ultimo_registro()
-
+   
+   pedido_id = ultimo_registro() 
+   print(pedido_id)
    if total_pagar != '0':
       return render_template('cheking.html', 
                              time=carga,
                              total=total_pagar,
-                             pedido_id=pedido_id[0][0] )
+                             pedido_id=pedido_id )
    
    abort(404)
 
@@ -105,7 +106,8 @@ def pix(pedido_id):
             img = cob['charge']['qrCodeImage']
 
          except KeyError:
-            error = cob['error']
+            error = cob
+            print(error)
             return  render_template('pix.html', e=error)
          return render_template('pix.html', total_pagar='%.2f' % float(total), 
                               img=img,
@@ -124,7 +126,7 @@ def pixcheck(idPix):
             ultima_trastion = get_cob(appid, idPix)
             status = ultima_trastion['charge']['status']  
             if status != 'ACTIVE':
-               update_value('status_pagamento',True,'pedido_id = {idPix}')
+               update_value('status_pagamento',True,f'pedido_id = {idPix}')
             yield 'data: {}\n\n'.format(status)
             sleep(2)  # Espera 2 segundo antes de generar el próximo dato
 
@@ -153,7 +155,7 @@ def completestatus():
             registro = view_pedido(pedido_id) 
 
             if registro[-3] == "00:00:00":
-               data = update_value('status_carga',True, "pedido_id = {pedido_id}")
+               data = update_value('status_carga',True, f"pedido_id = {pedido_id}")
                control_relay().stop()
             else:
                seg = tiempo_a_segundos(registro[-3])

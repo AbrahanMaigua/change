@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import RPi.GPIO as GPIO
-import os
-os.getcwd()
-=======
 
 try:
     import RPi.GPIO as GPIO
@@ -23,7 +18,6 @@ try:
             GPIO.output(self.relay_ch, GPIO.HIGH)
             GPIO.cleanup()
 
->>>>>>> 44229fab7276430a9ea22cbe55cc3da6d4336fdc
 
 except ModuleNotFoundError as error:
     
