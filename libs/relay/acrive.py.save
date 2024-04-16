@@ -6,6 +6,9 @@ try:
             self.relay_ch = 21
             GPIO.setwarnings(False)
             GPIO.setmode(GPIO.BCM)
+  File "/home/abrahan/change/libs/relay/acrive.py", line 38
+    Traceback (most recent call last):
+IndentationError: unexpected indent
  
         def start(self):
 
@@ -33,4 +36,13 @@ except ModuleNotFoundError as error:
         def stop(self):
             pass
 
-control_relay().start()
+control_relay().stop()
+
+		Traceback (most recent call last):
+  File "/home/abrahan/change/libs/relay/acrive.py", line 36, in <module>
+    control_relay().stop()
+  File "/home/abrahan/change/libs/relay/acrive.py", line 18, in stop
+    GPIO.output(self.relay_ch, GPIO.HIGH)
+RuntimeError: Please set pin numbering mode using GPIO.setmode(GPIO.BOARD) or GPIO.setmode(GPIO.BCM)
+
+
