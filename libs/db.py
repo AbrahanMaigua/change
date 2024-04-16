@@ -1,7 +1,9 @@
 from flask import g
 from .config import load_config 
 import psycopg2
+import os
 
+os.chdir('/home/abrahan/change')
 
 def create_connection():
     config = load_config()
