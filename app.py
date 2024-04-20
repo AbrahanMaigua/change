@@ -9,7 +9,7 @@ from libs.relay.acrive import *
 
 app = Flask(__name__)
 
-chdir('/home/abrahan/change')
+chdir('/home/kuro/change')
 app.template_folder = getcwd() + r'/tamplante' 
 app.static_folder   = getcwd() + r'/static'
 print(app.static_folder ,
@@ -77,7 +77,6 @@ def show_post():
                              time=carga,
                              total=total_pagar,
                              pedido_id=pedido_id )
-                             pedido_id=pedido_id[0] )
    
    abort(404)
 

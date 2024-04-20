@@ -3,7 +3,7 @@ from .config import load_config
 import psycopg2
 import os
 
-os.chdir('/home/abrahan/change')
+os.chdir('/home/kuro/change')
 
 def create_connection():
     config = load_config()
