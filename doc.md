@@ -1,9 +1,9 @@
 Documentação para entender o código do aplicativo Mobility
 
 
-1. Resumo:
+1. Resumo: 
 -----------
-Este código é um aplicativo web desenvolvido usando Flask, uma estrutura Python para construção de aplicativos web. A aplicação consiste em diversas rotas que renderizam templates HTML e realizam algumas operações básicas.
+Este código é um aplicativo web desenvolvido usando Flask, uma estrutura Python para construção de aplicativos web. A aplicação consiste em diversas rotas que renderizam templates HTML e realizam algumas operações básicas. ejecutado en una rasberry pi
 
 2. Estrutura do arquivo:
 ---------------------------
