@@ -11,16 +11,18 @@
 <div class="info-container text-1">
     
     <div>
-        <p>Duración de carga:</p>
-        <p>Precio:</p>
+        <p>duração do carregamento:</p>
+        <p>montante a ser pago:</p>
     </div>
     <div>
         <p>{{ time }}</p>
         <p>R$ {{ total }}</p>
     </div>
 </div>
+<h3>Escolha a forma de pagamento</h3>
 
 <div class="center">
+
     <button class="button" onclick="pix({{ total }}, {{ pedido_id }})">Pix</button>
     <!--
     <a class="button plain-text" href="/carton" >cartão de porta</a>

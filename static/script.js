@@ -11,11 +11,9 @@ console.log(counterElement)
 console.log(counterElement)
 
 const timeT      =  document.getElementById("counter")
-if (timeT != null) {
-    let textoInicial = timeT.textContent;
-    let caracteres   = textoInicial.split('');
-    let contador_t   = caracteres.length -1;
-}
+let textoInicial = timeT.textContent;
+let caracteres   = textoInicial.split('');
+let contador_t   = caracteres.length -1;
 
 function incrementTime(secondsToAdd) {
     totalSeconds += secondsToAdd;
@@ -36,7 +34,14 @@ function updateSendLink() {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
-    sendLinkElement.href = `cheking?hours=${hours}&min=${minutes}&seg=${seconds}`;
+    if (`${seconds}` != '00' || `${minutes}` != '00' || `${hours}` != '00') {
+          sendLinkElement.href = `cheking?hours=${hours}&min=${minutes}&seg=${seconds}`;
+
+
+    } else {
+        counterElement.classList.add('red');
+        console.log(counterElement.className)
+    }
 }
 
 function updateCounter() {
@@ -70,7 +75,7 @@ function pad(num) {
 // Función para actualizar el contador
 function actualizarContador() {
     let tiempoFormateado = formatearTiempo(contador);
-
+    console.log(isactivecronometro)
     contador--; // Decrementar el contador
     // document.getElementById("counter").textContent = tiempoFormateado; // Actualizar el valor mostrado en el contador
 
@@ -149,7 +154,7 @@ function pix(total, pedido_id) {
 }
 
 function completeStatusCarga() {
-    const eventSource = new EventSource('/carga_status');
+    const eventSource = new EventSource('/complete');
         eventSource.onmessage = function(event) {
             console.log(event.data)
         };
@@ -172,9 +177,6 @@ function actualizarCronometro() {
     // Si el tiempo restante es 0, detener el cronómetro
     if (tiempoRestante === 0) {
         clearInterval(intervalo);
-        if (isactivecronometro === true){
-            completeStatusCarga()
-        }
         window.location.href = '/';
 
     } else {
@@ -186,16 +188,21 @@ function actualizarCronometro() {
 function iniciarCronometro() {
     console.log("Cronómetro iniciado");
     actualizarCronometro(); // Llamar a la función una vez para que comience inmediatamente
+    completeStatusCarga()
     return setInterval(actualizarCronometro, 900);
 }
 function startcronometro() {
     // Cuando se hace clic en el botón, se inicia el cronómetro
     if (isactivecronometro === false) {
         isactivecronometro = true
+        iniciarCronometro();
+
         document.getElementById('startButton').remove()
         document.getElementById('back').remove()
+        document.getElementById('intruciones').remove()
+        
 
-        var intervalo = iniciarCronometro();
+       
 
 
     }

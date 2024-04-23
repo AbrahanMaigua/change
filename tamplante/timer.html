@@ -2,11 +2,17 @@
 {% extends "base.html" %}
 {% block title %}Pix{% endblock %}
 {% block content %}
+
 <div class="container">
+    <h2>Muito obrigado pela sua escolha.</h2>
+
     <div  class="counter">
         <p id="counter">{{ Time }}</p>
     </div>
-    <button class="button top" onclick="startcronometro()" id="startButton" >Iniciar/Detener</button>
+    
+    <h3 id="intruciones" >Pegue o carregador, coloque-o no carro e pressione o botão Iniciar.</h3>
+
+    <button class="button top" onclick="startcronometro()" id="startButton" >Iniciar</button>
 </div>
 
 {% endblock %}

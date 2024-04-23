@@ -25,8 +25,9 @@ body {
     border-radius: 20px;
     padding: 10px 40px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 5px;
     margin-right: 30px;
+    font-size: 20px;
 }
 
 
@@ -124,6 +125,9 @@ footer {
     color: #ff0000b5;
 } 
 
+.great{
+    color: #5af833b5;
+}
 .error {
     text-align:center ;
     font-size:24px;

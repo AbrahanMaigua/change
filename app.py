@@ -19,6 +19,7 @@ print(app.static_folder ,
 def home():
 
    pedido_id = ultimo_registro()
+   print(pedido_id)
    if pedido_id != None:
       registro = view_pedido(pedido_id) 
       print(registro)
@@ -66,7 +67,7 @@ def show_post():
                           int(hora), int(minutos), int(segundos))
 
    totalseg = hora * 3600 + minutos * 60 + segundos
-   total_pagar = totalseg / 40 # 60 seg valeria 1,5 reales
+   total_pagar = totalseg / 800 # 60 seg valeria 0,75 reales
    total_pagar = '%.2f' % float(total_pagar) 
    # save pedido
    create_pedido(date_row[0],date_row[1], carga, totalseg, total_pagar)
@@ -127,7 +128,7 @@ def pixcheck(idPix):
             ultima_trastion = get_cob(appid, idPix)
             status = ultima_trastion['charge']['status']  
             if status != 'ACTIVE':
-               update_value('status_pagamento',True,f'pedido_id = {idPix}')
+               update_value('status_pagamento',True,f'pix_id = {idPix}')
             yield 'data: {}\n\n'.format(status)
             sleep(2)  # Espera 2 segundo antes de generar el próximo dato
 
@@ -156,7 +157,7 @@ def completestatus():
             registro = view_pedido(pedido_id) 
 
             if registro[-3] == "00:00:00":
-               data = update_value('status_carga',True, "pedido_id = {pedido_id}")
+               update_value('status_carga',True, "pedido_id = {pedido_id}")
                control_relay().stop()
             else:
                seg = tiempo_a_segundos(registro[-3])
@@ -166,6 +167,8 @@ def completestatus():
                print(timeformat)
                update_value('tiempo_carga', f"\'{timeformat}\'", f"pedido_id = {pedido_id}")
             print(registro)
+            print(pedido_id)
+
             yield 'data: {}\n\n'.format(pedido_id)
             sleep(60)
 
