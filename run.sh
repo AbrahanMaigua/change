@@ -55,7 +55,7 @@ fi
 if [ "$(git rev-list --count HEAD)" -ge 2 ]; then
     # Obtener el hash del antepenúltimo commit
     antepenultimo_commit=$(git log --format="%H" -n 3 | tail -n 1)
-    
+    git fetch
     # Mostrar detalles del antepenúltimo commit
     echo "Detalles del antepenúltimo commit:"
     echo "$antepenultimo_commit"
