@@ -134,19 +134,23 @@ function resetCounter() {
 
 function addNumber(num) {
     if (contador_t != -1 && caracteres[contador_t] != ':'  ) {
-        caracteres[contador_t] = num.toString();
-        contador_t--;
+        let temp = caracteres[contador_t]; // Guardamos el valor actual en una variable temporal
+        caracteres[contador_t] = num.toString(); // Colocamos el nuevo número en la posición actual
+        contador_t--; // Movemos el contador una posición hacia atrás
+        addNumber(temp); // Llamamos recursivamente a addNumber para desplazar el número anterior
     } else {
-        contador_t--;
-        addNumber(num)
+        contador_t--; // Si estamos en ':' o al inicio de la cadena, solo movemos el contador
+        addNumber(num); // Llamamos recursivamente a addNumber con el nuevo número
     }
+
     // Actualizamos solo los caracteres modificados en el texto mostrado
-    let Seg = obtenerSegundos(caracteres.join(''))
+    let Seg = obtenerSegundos(caracteres.join(''));
     if (Seg > MAX_SECONDS) {
         Seg = MAX_SECONDS;
     }
+    
     timeT.textContent = formatearTiempo(Seg);
-    timeT.classList.remove('red')
+    timeT.classList.remove('red');
 }
 
 function pix(total, pedido_id) {

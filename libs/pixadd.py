@@ -16,7 +16,7 @@ def create_cob(AppID:str, valor:str, cometdv:str) -> tuple:
         tuple: Una tupla que contiene la respuesta de la solicitud HTTP y el ID de la transacción generada.
     """
     
-    valor = valor.replace('.','') + '0'
+    valor = valor.replace('.','') 
     headers = {
         'Authorization': AppID,
         'content-type': 'application/json',

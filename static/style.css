@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-   /* background-color: #f0f0f0;*/
+    background-color: #f0f0f0;
 }
 .top {
     margin-top: 12em !important;
@@ -41,9 +41,10 @@ body {
     margin-top: 50px;
 }
 .image {
-    width: 315px;
+    width: 724px;
+    height: 348px;
     display: block;
-    margin: 0 auto;
+    margin: -44px auto;
 }
 
 .qr{

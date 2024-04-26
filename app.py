@@ -157,7 +157,7 @@ def completestatus():
             registro = view_pedido(pedido_id) 
 
             if registro[-3] == "00:00:00":
-               update_value('status_carga',True, "pedido_id = {pedido_id}")
+               update_value('status_carga',True, f"pedido_id = {pedido_id}")
                control_relay().stop()
             else:
                seg = tiempo_a_segundos(registro[-3])
