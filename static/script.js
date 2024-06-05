@@ -1,5 +1,4 @@
 let intervalo;
-let contador;
 let isactivecronometro = false;
 
 let totalSeconds = 0;
@@ -13,7 +12,17 @@ console.log(counterElement)
 const timeT      =  document.getElementById("counter")
 let textoInicial = timeT.textContent;
 let caracteres   = textoInicial.split('');
-let contador_t   = caracteres.length -1;
+// Declarar la variable globalmente
+let contador_t;
+
+// Asignar su valor en el lugar adecuado, por ejemplo, dentro de una función de inicialización
+function inicializarContador(caracteres) {
+    contador_t = caracteres.length - 2;
+}
+
+// Llamar a la función de inicialización con el array 'caracteres'
+inicializarContador(caracteres);
+
 
 function incrementTime(secondsToAdd) {
     totalSeconds += secondsToAdd;
@@ -132,25 +141,76 @@ function resetCounter() {
     contador_t = caracteres.length -1;
 }
 
-function addNumber(num) {
-    if (contador_t != -1 && caracteres[contador_t] != ':'  ) {
-        let temp = caracteres[contador_t]; // Guardamos el valor actual en una variable temporal
-        caracteres[contador_t] = num.toString(); // Colocamos el nuevo número en la posición actual
-        contador_t--; // Movemos el contador una posición hacia atrás
-        addNumber(temp); // Llamamos recursivamente a addNumber para desplazar el número anterior
-    } else {
-        contador_t--; // Si estamos en ':' o al inicio de la cadena, solo movemos el contador
-        addNumber(num); // Llamamos recursivamente a addNumber con el nuevo número
+
+let currentTimeInSeconds = 0;
+
+function incrementTimeBy(number) {
+    // Convert the number into hours, minutes, and seconds
+    let hours = Math.floor(number / 3600);
+    let minutes = Math.floor((number % 3600) / 60);
+    let seconds = number % 60;
+
+    // Convert the old current time to hours, minutes, and seconds
+    let currentHours = Math.floor(currentTimeInSeconds / 3600);
+    let currentMinutes = Math.floor((currentTimeInSeconds % 3600) / 60);
+    let currentSeconds = currentTimeInSeconds % 60;
+
+    // Add the new values
+    currentSeconds += seconds;
+    if (currentSeconds >= 60) {
+        currentMinutes += Math.floor(currentSeconds / 60);
+        currentSeconds = currentSeconds % 60;
     }
 
+    currentMinutes += minutes;
+    if (currentMinutes >= 60) {
+        currentHours += Math.floor(currentMinutes / 60);
+        currentMinutes = currentMinutes % 60;
+    }
+
+    currentHours += hours;
+    if (currentHours >= 24) {
+        currentHours = currentHours % 24;
+    }
+
+    // Update the current time in seconds
+    currentTimeInSeconds = (currentHours * 3600) + (currentMinutes * 60) + currentSeconds;
+
+    // Format the time as 00:00:00
+    let formattedHours = String(currentHours).padStart(2, '0');
+    let formattedMinutes = String(currentMinutes).padStart(2, '0');
+    let formattedSeconds = String(currentSeconds).padStart(2, '0');
+
+    // Update the timer element
+    document.getElementById('counter').textContent = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+}
+
+
+
+
+function addNumber(num) {
+    console.log('Ejecutando addNumber con contador_t:', contador_t, 'y num:', num);
+
+    while (contador_t >= 0) {
+        if (caracteres[contador_t] !== ':') {
+            let temp = caracteres[contador_t]; // Guardamos el valor actual en una variable temporal
+            caracteres[contador_t] = String(num) // Colocamos el nuevo número en la posición actual
+            contador_t--; // Movemos el contador una posición hacia atrás
+            num = temp; // Actualizamos num para la siguiente iteración
+        } else {
+            contador_t--; // Si estamos en ':' o al inicio de la cadena, solo movemos el contador
+        }
+    }
     // Actualizamos solo los caracteres modificados en el texto mostrado
     let Seg = obtenerSegundos(caracteres.join(''));
     if (Seg > MAX_SECONDS) {
         Seg = MAX_SECONDS;
     }
-    
+
+    let timeT = document.getElementsByClassName('timeT');
+    console.log(timeT.textContent)
     timeT.textContent = formatearTiempo(Seg);
-    timeT.classList.remove('red');
+    //timeT.classList.remove('red');
 }
 
 function pix(total, pedido_id) {

@@ -136,7 +136,7 @@ sudo systemctl start server.service
 [Desktop Entry]
 Type=Application
 Name=My Web App
-Exec=chromium-browser localhost:8000 --kiosk
+Exec=chromium-browser http://localhost:5000 --kiosk
 Icon=chromium-browser
 Terminal=false
 
